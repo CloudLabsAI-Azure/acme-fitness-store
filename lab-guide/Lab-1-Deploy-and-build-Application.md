@@ -115,7 +115,7 @@ In this lab, you will learn how to build and deploy Spring applications to Azure
 
 In this task, you will try to deploy a very simple hello-world spring boot app to get a high level understanding of how to deploy an asa-e app and access it.
 
-1. To invoke the Spring Initializer for creating the Spring Boot application, run the following command :
+1. To deploy the hellpw world app and creating the Spring Boot application, run the following command :
 
    ```shell
    git clone https://github.com/spring-guides/gs-spring-boot.git
@@ -124,14 +124,31 @@ In this task, you will try to deploy a very simple hello-world spring boot app t
 1. Run the following command to create a new file called HelloController.java in the hello-world directory and add the new Spring MVC Controller inside that file.
 
    ```shell
+   cd gs-spring-bootrem
+    cat >HelloController.java << EOF
+    package com.example.demo;
+
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.RestController;
+
+    @RestController
+    public class HelloController {
+
+       @GetMapping("/hello")
+       public String hello() {
+         return "Hello from Azure Spring Apps Enterprise";
+     }
+    }
+    EOF
+    mv HelloController.java src/main/java/com/example/demo/HelloController.java
    cd gs-spring-boot/complete
-   mvn clean package -DskipTests
+   
    ```
 1. Run the following command to create the 'hello-world' app instance and deploy it to Azure Spring Apps Enterprise:
 
    ```shell
    az spring app create -n hello-world --assign-endpoint true
-   
+   mvn clean package -DskipTests
    az spring app deploy -n hello-world --artifact-path target/spring-boot-complete-0.0.1-SNAPSHOT.jar
    cd ..
    ```
