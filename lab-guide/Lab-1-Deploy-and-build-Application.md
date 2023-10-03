@@ -2,7 +2,7 @@
 
 Duration: 40 minutes
 
-In this lab, you will learn how to build and deploy both frontend and backend Spring applications to Azure Spring Apps. In order to develop a high-level grasp of how to deploy and operate the same, you will first attempt to setup a very basic hello-world Spring Boot app. After that, you will configure Spring Cloud Gateway, deploy the frontend and backend apps of ACME-FITNESS (the demo application you will use in this lab), and verify that you can access the frontend as well as the backend. Additionally, you will change the Spring Cloud Gateway rules for these backend apps and set them up to communicate with the Application Configuration Service and the Service Registry.
+In this lab, you will learn how to build and deploy both frontend and backend Spring applications to Azure Spring Apps. In order to develop a high-level grasp of how to deploy and operate the same, you will first attempt to set up a very basic hello-world Spring Boot app. After that, you will configure Spring Cloud Gateway, deploy the frontend and backend apps of ACME-FITNESS (the demo application you will use in this lab), and verify that you can access the frontend as well as the backend. Additionally, you will change the Spring Cloud Gateway rules for these backend apps and set them up to communicate with the Application Configuration Service and the Service Registry.
 
 ### Task 1: Deploy a Hello World service to ASA-E 
 
@@ -146,7 +146,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 
 ### Task 2: Deploy a Frontend Application
 
- In this section, you are going to deploy the frontend of ACME-FITNESS (the demo application that you will be using in this lab), configure it with Spring Cloud Gateway (SCG), and validate that you are able to access the frontend. You will create a Spring Cloud Gateway instance for Acme-Fitness and connect all the frontend and backend services to this gateway instance. This way, the gateway instance acts as the proxy for any requests that are targeted towards the Acme-Fitness application. Routing rules bind endpoints in the request to the backend applications. In the task below, you will also create a rule in SCG for the frontend app.
+ In this section, you are going to deploy the front end of ACME-FITNESS (the demo application that you will be using in this lab), configure it with Spring Cloud Gateway (SCG), and validate that you are able to access the front end. You will create a Spring Cloud Gateway instance for Acme-Fitness and connect all the frontend and backend services to this gateway instance. This way, the gateway instance acts as the proxy for any requests that are targeted towards the Acme-Fitness application. Routing rules bind endpoints in the request to the backend applications. In the task below, you will also create a rule in SCG for the frontend app.
 
 The diagram below shows the final result once this section is complete:
 
@@ -200,14 +200,14 @@ The diagram below shows the final result once this section is complete:
    ```
    ![](Images/mjv2-10.png)
   
-   > **Note:** If you see the ACME-FITNESS home page displayed as below, then it means that your frontend app and its corresponding route in SCG is configured correctly and deployed successfully. Explore the application, but notice that not everything is functioning yet. Continue on to the next exercise to configure the rest of the functionality.
+   > **Note:** If you see the ACME-FITNESS home page displayed below, then it means that your frontend app and its corresponding route in SCG are configured correctly and deployed successfully. Explore the application, but notice that not everything is functioning yet. Continue on to the next exercise to configure the rest of the functionality.
     
    ![](Images/acme-fitness-homepage.png)
       
 
 ### Task 3: Deploy Backend Applications
 
-In this section, you are going to deploy the backend apps for ACME-FITNESS application. You will also update the rules for these backend apps in Spring Cloud Gateway and configure these apps to talk to the Application Configuration Service and Service Registry. The Application Configuration Service is a feature of Azure Spring Apps Enterprise that makes Spring Apps configuration server capabilities available in a polyglot way. ASA-E internally uses the Tanzu Service Registry for dynamic service discovery.
+In this section, you are going to deploy the backend apps for the ACME-FITNESS application. You will also update the rules for these backend apps in Spring Cloud Gateway and configure these apps to talk to the Application Configuration Service and Service Registry. The Application Configuration Service is a feature of Azure Spring Apps Enterprise that makes Spring Apps configuration server capabilities available in a polyglot way. ASA-E internally uses the Tanzu Service Registry for dynamic service discovery.
 
 The diagram below shows the final result once this section is complete:
 
@@ -256,7 +256,7 @@ The diagram below shows the final result once this section is complete:
       --routes-file ./routes/catalog-service.json
    ```
    
-   > **Note:** Routing rules bind endpoints in the request to the backend applications. For example, in the Cart route below, the routing rule indicates any requests to /cart/** endpoint gets routed to the backend Cart App.
+   > **Note:** Routing rules bind endpoints in the request to the backend applications. For example, in the Cart route below, the routing rule indicates any requests to /cart/** endpoint get routed to the backend Cart App.
 
    ![](Images/upd-mjv2-8.png)
    
@@ -298,7 +298,7 @@ The diagram below shows the final result once this section is complete:
    ```
    ![](Images/mjv2-10.png)
 
-1. Copy the Gateway URL and paste it in a new browser, and then you should see the ACME FITNESS Store application. Now that all the required apps are deployed, you should be able to open the home page and access it through the entire app. Explore the application, but notice that not everything is functioning yet. Continue to Lab 2 to configure Single Sign-On to enable the rest of the functionality (features like logging in, adding items to the cart, or placing an order).
+1. Copy the Gateway URL and paste it into a new browser, and then you should see the ACME FITNESS Store application. Now that all the required apps are deployed, you should be able to open the home page and access it through the entire app. Explore the application, but notice that not everything is functioning yet. Continue to Lab 2 to configure Single Sign-On to enable the rest of the functionality (features like logging in, adding items to the cart, or placing an order).
 
    ![](Images/mjv2-11.png)
 
@@ -317,7 +317,7 @@ The diagram below shows the final result once this section is complete:
    
    ![](Images/mjv2-12-new.png)
    
-1. Copy the URL and paste it in a new browser, and then you should see the API portal for the ACME Fitness Store application.
+1. Copy the URL and paste it into a new browser, and then you should see the API portal for the ACME Fitness Store application.
 
     ![](Images/api1.png)   
     
