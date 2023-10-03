@@ -26,7 +26,7 @@
    
    ![](Images/image8.png "Enter Password")
      
-   > If you are see **Help us protect your account** dialog box, then select the **Skip for now** option.
+   > If you see the **Help us protect your account** dialog box, then select the **Skip for now** option.
 
    ![](Images/MFA.png "Enter Password")
   
@@ -36,12 +36,12 @@
 
 1. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
    
-1. Now you will see Azure Portal Dashboard, click on **Resource groups** from the Navigate panel to see the resource groups.
+1. Now you will see the Azure Portal Dashboard, click on **Resource groups** from the Navigate panel to see the resource groups.
 
    ![](Images/select-rg.png "Resource groups")
    
-1. Confirm that you have all resource groups present as shown below. Open **Modernize-java-apps** resource group and verify the recources present in it.
+1. Confirm that you have all resource groups present as shown below. Open the **Modernize-java-apps** resource group and verify the resources present in it.
 
    ![](Images/mja-verify-rg.png "Resource groups")
    
-1. Now, click on the **Next** from the lower right corner to move to next page.
+1. Now, click on the **Next** from the lower right corner to move to the next page.
