@@ -8,7 +8,7 @@ In this unit, you will explore live application metrics and query logs to know t
 
 1. The Application Insights Instrumentation Key must be provided for the non-java applications.
 
-   > **Note:** In future iterations, the buildpacks for non-java applications will support Application Insights binding, and this step will be unnecessary.
+   > **Note:** In future iterations, the build packs for non-java applications will support Application Insights binding, and this step will be unnecessary.
 
 1. To retrieve the Instrumentation Key for Application Insights and add it to the Key Vault, run the following command in the Git Bash window. Replace azure-spring-apps-SUFFIX with your **azure-spring-apps-<inject key="DeploymentID" enableCopy="false" />**
 
@@ -119,7 +119,7 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
 
    ![](Images/mjv2-56.png)
 
-   > **Note:**  Spring Boot registers a lot of core metrics: JVM, CPU, Tomcat, Logback,...The Spring Boot auto-configuration enables the instrumentation of requests handled by Spring MVC. The REST controllers `ProductController`, and `PaymentController` have been instrumented by the `@Timed` Micrometer annotation at class level.
+   > **Note:**  Spring Boot registers a lot of core metrics: JVM, CPU, Tomcat, Logback,...The Spring Boot auto-configuration enables the instrumentation of requests handled by Spring MVC. The REST controllers `ProductController`, and `PaymentController` have been instrumented by the `@Timed` Micrometer annotation at the class level.
 
    * `acme-catalog` application has the following custom metrics enabled:
    * @Timed: `store.products`
@@ -144,7 +144,7 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
    
    ![](Images/Ex5-T6-S2.png)
    
-1. On the Log Analytics page, select `Logs` blade **(1)** under General and close the default query page by clicking on `X` **(2)** on the top right corner.
+1. On the Log Analytics page, select `Logs` blade **(1)** under General and close the default query page by clicking on `X` **(2)** in the top right corner.
 
    ![](Images/log-welcome.png)
 
@@ -157,7 +157,7 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
       | sort by TimeGenerated
       | project TimeGenerated, AppName, Log
    ```
-   >**Note:** If you see the message "The query was stopped", then please wait for few minutes and try again as there might be a chance that services are still being deployed.
+   >**Note:** If you see the message "The query was stopped", then please wait for a few minutes and try again as there might be a chance that services are still being deployed.
    
    ![](Images/mjv2-61.png)
 
@@ -206,7 +206,7 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
 
    ![](Images/mjv2-65-new.png)
 
-1. Click on `+` **(1)** to create the new query. Now paste the below Kusto query **(2)** and click on **Run (3)** to see all the logs from Spring Cloud Service Registry managed by Azure Spring Apps:
+1. Click on `+` **(1)** to create the new query. Now paste the below Kusto query **(2)** and click on **Run (3)** to see all the logs from the Spring Cloud Service Registry managed by Azure Spring Apps:
 
    ```sql
       AppPlatformSystemLogs

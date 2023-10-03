@@ -12,7 +12,7 @@ Duration: 10 minutes
    cd ~/source-code/acme-fitness-store
    ```
 
-1. The index.html file will open with VS Code Editor, now in line number **67**, update the value from **About ACME Fitness** to **ACME Fitness key Points** and save the file using **Ctrl+S** key.
+1. The index.html file will open with VS Code Editor, now in line number **67**, update the value from **About ACME Fitness** to **ACME Fitness key Points** and save the file using the **Ctrl+S** key.
 
      ![gfd](Images/lab6.png)
 
@@ -49,7 +49,7 @@ Duration: 10 minutes
     
     ![](Images/updatesstagging.png)
     
-1. Once the set deployment is completed, refresh the main application Gateway URL, and you should be able to see the changes in production. If you do not have the application open, run the below command to get the Gateway endpoint. (Copy the URL and paste it in a new browser.)
+1. Once the set deployment is completed, refresh the main application Gateway URL, and you should be able to see the changes in production. If you do not have the application open, run the below command to get the Gateway endpoint. (Copy the URL and paste it into a new browser.)
 
     ```bash
     echo "https://${GATEWAY_URL}"

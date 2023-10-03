@@ -92,7 +92,7 @@ In this lab, you will create persistent stores outside the applications and conn
 
 ### Task 3: Update Applications
 
-In this task, you will update the affected applications to use the databases and redis cache.
+In this task, you will update the affected applications to use the databases and Redis cache.
 
 > **Note:** The commands listed in this task can run for up to two minutes. Hold off until the commands have been completed.
 

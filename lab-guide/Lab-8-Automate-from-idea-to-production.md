@@ -25,7 +25,7 @@ Duration: 15 minutes
   
    ![](Images/secretsandvariables.png)
    
-1. Type `AZURE_CREDENTIALS` **(1)** for the Name of the secret, enter the following code under Secret and make sure replace the values of **ClientId (Application Id)**, **ClientSecret (Secret Key)**, **Subscription_ID** and **TenantId (Directory ID)** **(2)** and then click on **Add Secret** **(3)**.   
+1. Type `AZURE_CREDENTIALS` **(1)** for the Name of the secret, enter the following code under Secret and make sure to replace the values of **ClientId (Application Id)**, **ClientSecret (Secret Key)**, **Subscription_ID** and **TenantId (Directory ID)** **(2)** and then click on **Add Secret** **(3)**.   
 
      ```json
     {
@@ -76,7 +76,7 @@ Duration: 15 minutes
 
 1. From your repo, click on **Actions**.
 
-1. Select **Deploy catalog** (1) under __Actions_ All workflows_ from the left side panel and click on **Run workflow** (2). After that Click on **Run workflow** (3) under _Branch:Azure_.
+1. Select **Deploy catalog** (1) under __Actions_ All workflows_ from the left side panel and click on **Run workflow** (2). After that Click on **Run workflow** (3) under _Branch: Azure_.
 
    ![](Images/L8-t3-s2.png)
 
@@ -84,7 +84,7 @@ Duration: 15 minutes
 
    ![Output from the Deploy Catalog workflow](Images/final-result.png)
 
-1. Once the GitHub workflow is completed, navigate back to your web app to see the new **Catalog** option added on the website.
+1. Once the GitHub workflow is completed, navigate back to your web app to see the new **Catalog** option added to the website.
 
 
 ## Lab Ends

@@ -8,23 +8,23 @@ The Acme-fitness application is an online shopping platform for having the best 
   * An identity service for referencing the authenticated user.
 
 * 1 Python application:
-  * A cart service for managing a users' items that have been selected for purchase.
+  * A cart service for managing a user's items that have been selected for purchase.
 
 * 1 ASP.NET Core applications:
   * An order service for placing orders to buy products that are in the users' carts.
 
 * 1 NodeJS and static HTML Application:
-  * A frontend shopping application.
+  * A front-end shopping application.
 
 
 ## Hands-on Labs Scenario
-In this hands-on lab, you will deploy existing demo application i.e. ACME FITNESS Store application written in Java, Python, and C# to Azure using Azure Spring Apps Enterprise (ASA-E). You can simply execute Spring Boot and polyglot applications on Azure with ASA-E. After you're done, you can either switch to Azure Portal or continue managing the application using the Azure CLI.
+In this hands-on lab, you will deploy an existing demo application i.e. ACME FITNESS Store application written in Java, Python, and C# to Azure using Azure Spring Apps Enterprise (ASA-E). You can simply execute Spring Boot and Polyglot applications on Azure with ASA-E. After you're done, you can either switch to Azure Portal or continue managing the application using the Azure CLI.
 
 ## Lab Context
 Throughout this hands-on lab, you will learn several things:
 
 - Build and deploy both frontend and backend Spring applications to Azure Spring Apps.
-- Configure Single Sign-On (SSO) for the application using Azure Active Directory.
+- Configure Single Sign-On (SSO) for the application using Microsoft Entra ID.
 - Create persistent stores (PostgreSQL and Azure Cache for Redis) outside the applications and connect those applications to those stores.
 - Use Azure Key Vault to securely store and load secrets to connect to Azure services.
 - Monitor applications using Application Insights and Log Analytic Workspace.
@@ -34,10 +34,10 @@ Throughout this hands-on lab, you will learn several things:
 
 ## Architecture
 
-![acme-fitness](Images/upd-architecture.png)
+![acme-fitness](Images/java1.png)
 
 
-> **Note:** Please be aware that each lab depends on the one before it. In order to complete the lab successfully, you need to ensure that you have not misssed any previous tasks while performing the lab.
+> **Note:** Please be aware that each lab depends on the one before it. In order to complete the lab successfully, you need to ensure that you have not missed any previous tasks while performing the lab.
 
 
 
