@@ -34,7 +34,7 @@ Throughout this hands-on lab, you will learn several things:
 
 ## Architecture
 
-![acme-fitness](Images/upd-architecture.png)
+![acme-fitness](Images/java1.png)
 
 
 > **Note:** Please be aware that each lab depends on the one before it. In order to complete the lab successfully, you need to ensure that you have not missed any previous tasks while performing the lab.
