@@ -2,7 +2,7 @@
 
 Duration: 20 minutes
  
-In this lab, you will configure Single Sign-On for Spring Cloud Gateway using M.
+In this lab, you will configure Single Sign-On for Spring Cloud Gateway using Microsoft Entra ID.
 
 ### Task 1: Prepare your environment for SSO Deployments
 
@@ -51,7 +51,7 @@ In this lab, you will configure Single Sign-On for Spring Cloud Gateway using M.
    
    > **Note**: Copy and save the above four output values to the notepad or text editor. You will be using these values in Lab 8.
 
-1. To add the necessary web redirect URIs to the Azure AD Application Registration, run the following command:
+1. To add the necessary web redirect URIs to the Microsoft Entra ID Application Registration, run the following command:
 
    ```shell
    az ad app update --id ${CLIENT_ID} \
