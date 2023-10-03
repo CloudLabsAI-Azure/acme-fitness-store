@@ -12,7 +12,7 @@ Spring Cloud Gateway includes route filters from the Open Source version as well
    * Number of requests accepted during the window.
    * Duration of the window: by default milliseconds, but you can use the s, m, or h suffix to specify it in seconds, minutes, or hours.
    * (Optional) User partition key: it's also possible to apply rate limiting per user, that is, different users can have their throughput allowed based on an identifier found in the request. Set whether the key is in a JWT claim or HTTP header with '' or '' syntax.
-   * (Optional) It is possible to rate limit by IP addresses. Note, this cannot be combined with the rate-limiting per user.
+   * (Optional) It is possible to rate limit by IP addresses. Note, that this cannot be combined with the rate-limiting per user.
 
    > **Note:** The following example would limit all users to two requests every 5 seconds to the `/products` route.
 
@@ -56,7 +56,7 @@ When the limit is exceeded, the response will fail with `429 Too Many Requests` 
    echo "https://${GATEWAY_URL}/products"
    ```
 
-     > **Note:** Copy the output URL and paste it in a new browser. Make several requests to the URL for `/products` within a five-second period to see requests fail with the status `429 Too Many Requests`.
+     > **Note:** Copy the output URL and paste it into a new browser. Make several requests to the URL for `/products` within a five-second period to see requests fail with the status `429 Too Many Requests`.
    
    ![](Images/L7-t3-s1.png) 
 
