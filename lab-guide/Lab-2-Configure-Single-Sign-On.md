@@ -2,7 +2,7 @@
 
 Duration: 20 minutes
  
-In this lab, you will configure Single Sign-On for Spring Cloud Gateway using Azure Active Directory.
+In this lab, you will configure Single Sign-On for Spring Cloud Gateway using M.
 
 ### Task 1: Prepare your environment for SSO Deployments
 
@@ -26,8 +26,8 @@ In this lab, you will configure Single Sign-On for Spring Cloud Gateway using Az
    * TenantID: **<inject key="tenantid" enableCopy="true" />**
    
    ```shell
-   export CLIENT_ID=ApplicationID       #  Update with you existing application id from environment details page
-   export CLIENT_SECRET=Applicationsecret    # Update with you existing application secret from environment details page
+   export CLIENT_ID=ApplicationID       #  Update with your existing application ID from the environment details page
+   export CLIENT_SECRET=Applicationsecret    # Update your existing application secret from the environment details page
    export ISSUER_URI=https://login.microsoftonline.com/TenantID/v2.0        # Make sure to replace TenantID with your tenant ID
    export JWK_SET_URI=https://login.microsoftonline.com/TenantID/discovery/v2.0/keys # Make sure to replace TenantID with your tenant ID
    ```
@@ -90,7 +90,7 @@ In this lab, you will configure Single Sign-On for Spring Cloud Gateway using Az
    ![](Images/mjv2-14-new.png)
 
 
-### Task 4: Login to the application through the Spring Cloud Gateway 
+### Task 4: Log in to the application through the Spring Cloud Gateway 
 
 1. Run the following command to retrieve the URL for Spring Cloud Gateway, and then copy the output URL into a browser to access the application:
 
@@ -198,7 +198,7 @@ In this lab, you will configure Single Sign-On for Spring Cloud Gateway using Az
 
     ![](Images/mjv2-17-new.png)
     
-    >**Note:** Please be aware that the above command can run for up to two minutes. Hold off until the command has completed.
+    >**Note:** Please be aware that the above command can run for up to two minutes. Hold off until the command has been completed.
 
 ### Task 6: Explore the API using the API Portal 
 
