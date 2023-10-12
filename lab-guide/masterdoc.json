@@ -3,43 +3,43 @@
   "Language": "English",
   "Files": [
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Getting-started.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Getting-started.md",
       "Order": 2
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Overview.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Overview.md",
       "Order": 1
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-1-Deploy-and-build-Application.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-1-Deploy-and-build-Application.md",
       "Order": 3
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-2-Configure-Single-Sign-On.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-2-Configure-Single-Sign-On.md",
       "Order": 4
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-3-Integrate-the-Azure-Database-for-PostgreSQL-and-Azure-Cache-for-Redis.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-3-Integrate-the-Azure-Database-for-PostgreSQL-and-Azure-Cache-for-Redis.md",
       "Order": 5
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-4-Securely-Load-Application-Secrets.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-4-Securely-Load-Application-Secrets.md",
       "Order": 6
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-5-Monitor-End-to-End.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-5-Monitor-End-to-End.md",
       "Order": 7
     }, {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-6-Change-the-application.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-6-Change-the-application.md",
       "Order": 8
     },
        
         {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-7-Set-Request-Rate-Limits.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-7-Set-Request-Rate-Limits.md",
       "Order": 9
     },
             {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-8-Automate-from-idea-to-production.md",
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-8-Automate-from-idea-to-production.md",
       "Order": 10
     }
   ]
