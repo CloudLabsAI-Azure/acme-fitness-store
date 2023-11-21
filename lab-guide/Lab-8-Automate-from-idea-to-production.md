@@ -2,10 +2,10 @@
 
 Duration: 15 minutes
 
-### Task 1: Setup Github Account and Settings
+### Task 1: Setup GitHub Account and Settings
 
-1. From the new browser tab, go to [Github](https://github.com/) and log in to your account.
-    > **Note:** If you don't have an account for Github, please sign up.
+1. From the new browser tab, go to [GitHub](https://github.com/) and log in to your account.
+    > **Note:** If you don't have an account for GitHub, please sign up.
 
 1. After the login, go to [https://github.com/CloudLabsAI-Azure/acme-fitness-store](https://github.com/CloudLabsAI-Azure/acme-fitness-store) and click on `Fork`.
 
