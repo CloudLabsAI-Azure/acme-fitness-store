@@ -42,8 +42,9 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 
    ```shell
    cd azure
-   code setup-env-variables.sh
+   vi setup-env-variables.sh
    ```
+    >**Note**: If you face any issues while editing the file please check at the bottom of the file if it is in edit mode or not, if not in edit mode please hit on **i** key of your keyboard to go to the edit mode. once the updates are done to save the file please do **ctrl+c** and write **:wq!**  this will save the file or if you dont want to save the file do **ctrl_c** and write **:q!**.
 
 1. Update the following variables in the setup-env-variables.sh file by replacing the following values and **Save** it using **Ctrl+S** key and **Close** the file:
 
