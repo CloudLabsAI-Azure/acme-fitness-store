@@ -6,35 +6,41 @@ In this lab, you will create persistent stores outside the applications and conn
 
 ### Task 1: Prepare your environment 
 
-1. Run the following bash command to make a copy of the supplied template:
+1. Make sure you are operating from the ./scripts folder.
 
-   ```shell
-    cp ./azure/setup-db-env-variables-template.sh ./azure/setup-db-env-variables.sh
-   ```
+```shell
+pwd
+```
+
+2. Run the following bash command to make a copy of the supplied template.
+
+```shell
+  cp ./setup-db-env-variables-template.sh ./setup-db-env-variables.sh
+```
    
-1. To open the `setup-db-env-variables.sh` file, run the following command:
+3. To open the `setup-db-env-variables.sh` file, run the following command.
 
-   ```shell
-   cd azure
-   code setup-db-env-variables.sh
-   ```
+```shell
+  vi setup-db-env-variables.sh
+```
 
 1. Update the following variables in the setup-db-env-variables.sh file by replacing the SUFFIX value with **<inject key="DeploymentID" enableCopy="true" />** and **Save** it using **Ctrl+S** key and then **Close** the file:
 
-   ```shell
-   export AZURE_CACHE_NAME=azure-cache-SUFFIX                   # Update the SUFFIX in the value
-   export POSTGRES_SERVER=acmefitnessdbSUFFIX                  # Update the SUFFIX in the value
-   ```
-   
+```shell
+export AZURE_CACHE_NAME=change-me                   # Unique name for Azure Cache for Redis Instance
+export POSTGRES_SERVER=change-me                    # Unique name for Azure Database for PostgreSQL Flexible Server
+export POSTGRES_SERVER_USER=change-name             # Postgres server username to be created in next steps
+export POSTGRES_SERVER_PASSWORD=change-name         # Postgres server password to be created in next steps
+```  
    ![](Images/Ex3-T1-S3.png)
    
-   
+> Note: AZURE_CACHE_NAME and POSTGRES_SERVER must be unique names to avoid DNS conflicts
+
 1. Run the following command to move back to the acme-fitness-store directory and then set up the environment:
   
-   ```shell
-   cd ..
-   source ./azure/setup-db-env-variables.sh
-   ```
+```shell
+  source ./setup-db-env-variables.sh
+```
    
 ### Task 2: Create Service Connectors
    
