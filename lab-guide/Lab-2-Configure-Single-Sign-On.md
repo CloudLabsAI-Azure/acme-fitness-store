@@ -1,6 +1,6 @@
 ## Lab 2: Configure Single Sign-On
 
-Duration: 40 minutes
+Duration: 30 minutes
  
 In this lab, you will configure Single Sign-On for Spring Cloud Gateway using Microsoft Entra ID.
 
