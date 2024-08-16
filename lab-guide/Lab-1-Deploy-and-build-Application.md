@@ -4,7 +4,7 @@ Duration: 40 minutes
 
 In this lab, you will learn how to build and deploy both frontend and backend Spring applications to Azure Spring Apps. In order to develop a high-level grasp of how to deploy and operate the same, you will first attempt to set up a very basic hello-world Spring Boot app. After that, you will configure Spring Cloud Gateway, deploy the frontend and backend apps of ACME-FITNESS (the demo application you will use in this lab), and verify that you can access the frontend as well as the backend. Additionally, you will change the Spring Cloud Gateway rules for these backend apps and set them up to communicate with the Application Configuration Service and the Service Registry.
 
-### Task 1: Deploy a Hello World service to ASA-E 
+### Task 1: Deploy Infrastructure Stack
 
 In this task, you will try to deploy a very simple hello-world Spring Boot app to get a high-level understanding of how to deploy an ASA-E app and access it.
 
@@ -13,67 +13,65 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
     * **Azure Username/Email**: <inject key="AzureAdUserEmail"></inject> 
     * **Azure Password**: <inject key="AzureAdUserPassword"></inject>
     
-1. Now, click on the start button, search for git and open **Git Bash**.  
+2. Now, click on the start button, search for git and open **Git Bash**.  
 
      ![](Images/gitbash.png)                          
 
-1. Once the Git Bash is open, please continue with the next step.
+3. Once the Git Bash is open, please continue with the next step.
 
-1. Run the following command to remove previous versions and install the latest Azure Spring Apps Enterprise tier extension:
+4. Run the following command to remove previous versions and install the latest Azure Spring Apps Enterprise tier extension:
 
-    ```shell
-    az extension remove --name spring-cloud
-    az extension add --name spring
-    ```
+```shell
+  az extension remove --name spring-cloud
+  az extension add --name spring
+```
     
-1. To change the directory to the sample app repository in your shell, run the following command in the Bash shell pane: 
+5. To change the directory to the sample app repository in your shell, run the following command in the Bash shell pane: 
 
-    ```shell
-    cd source-code/acme-fitness-store
-    ```
+```shell
+  cd source-code/acme-fitness-store/azure-spring-apps-enterprise/scripts
+```
     
-1. Run the following command to create a bash script with environment variables by making a copy of the supplied template:
+6. Run the following command to create a bash script with environment variables by making a copy of the supplied template:
 
-    ```shell
-    cp ./azure/setup-env-variables-template.sh ./azure/setup-env-variables.sh
-    ```
+```shell
+  cp ./azure/setup-env-variables-template.sh ./azure/setup-env-variables.sh
+```
 
-1. To open the `./scripts/./azure/setup-env-variables.sh` file, run the following command:
+7. To open the `./scripts/setup-env-variables.sh` file, run the following command:
 
-   ```shell
-   cd azure
-   vi setup-env-variables.sh
-   ```
-    >**Note**: If you face any issues while editing the file please check at the bottom of the file if it is in edit mode or not, if not in edit mode please hit on **i** key of your keyboard to go to the edit mode. once the updates are done to save the file please do **ctrl+c** and write **:wq!**  this will save the file or if you dont want to save the file do **ctrl_c** and write **:q!**.
+```shell
+  vi setup-env-variables.sh
+```
+   >**Note**: If you face any issues while editing the file please check at the bottom of the file if it is in edit mode or not, if not in edit mode please hit on **i** key of your keyboard to go to the edit mode. once the updates are done to save the file please do **ctrl+c** and write **:wq!**  this will save the file or if you dont want to save the file do **ctrl_c** and write **:q!**.
 
-1. Update the following variables in the setup-env-variables.sh file by replacing the following values and **Save** it using **Ctrl+S** key and **Close** the file:
+8. Update the following variables in the setup-env-variables.sh file by replacing the following values and **Save** it using **Ctrl+S** key and **Close** the file:
 
    * SubscriptionID: **<inject key="Subscription Id" enableCopy="true"/>**
    * Spring App Name: **<inject key="Spring App Name" enableCopy="true"/>**
 
-   ```shell
-    export SUBSCRIPTION=subscription-id                 # Replace it with your subscription-id 
-    export RESOURCE_GROUP=Modernize-java-apps        
-    export SPRING_APPS_SERVICE=azure-spring-apps-SUFFIX   # Replace suffix with the provided DeploymentID
-    export LOG_ANALYTICS_WORKSPACE=acme-log-analytic  
-    export REGION=eastus                          
-   ```
+```shell
+  export SUBSCRIPTION=subscription-id                 # Replace it with your subscription-id 
+  export RESOURCE_GROUP=Modernize-java-apps        
+  export SPRING_APPS_SERVICE=azure-spring-apps-SUFFIX   # Replace suffix with the provided DeploymentID
+  export LOG_ANALYTICS_WORKSPACE=acme-log-analytic  
+  export REGION=eastus                          
+```
    >**Note:** Leave default values for RESOURCE_GROUP, LOG_ANALYTICS_WORKSPACE and REGION.
    
-    ![](Images/mja-setup-env-variables.png)
+   ![](Images/mja-setup-env-variables.png)
 
-1. Run the following command to move back to the acme-fitness-store directory and then set up the environment:
+9. Run the following command to move back to the acme-fitness-store directory and then set up the environment:
   
-   ```shell
-   cd ..
-   source ./azure/setup-env-variables.sh
-   ```   
+```shell
+  source ./setup-env-variables.sh
+``` 
   
-1. Run the following command to log in to Azure:
+10. Run the following command to log in to Azure:
 
-   ```shell
-   az login
-   ```   
+```shell
+  az login
+```   
    
    > **Note:** Once you run the command, you will be redirected to the default browser. Enter the following:
    > - **Azure username:** <inject key="AzureAdUserEmail"></inject>  
@@ -86,242 +84,292 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 
     * Replace ${SUBSCRIPTION} with the SubscriptionID: **<inject key="Subscription Id" enableCopy="true"/>**
 
-     ```shell
-     az account list -o table
-     az account set --subscription ${SUBSCRIPTION}
-     ```     
+```shell
+   az account list -o table
+   az account set --subscription ${SUBSCRIPTION}
+```  
     
-    ![](Images/mjv2-4.png)
+   ![](Images/mjv2-4.png)
    
 12. Now, run the following command to set your default resource group name and cluster name:
 
-     ```shell
-      az configure --defaults \
-      group=${RESOURCE_GROUP} \
-      location=${REGION} \
-      spring=${SPRING_APPS_SERVICE}
-     ```
+```shell
+  az configure --defaults \
+  group=${RESOURCE_GROUP} \
+  location=${REGION} \
+  spring=${SPRING_APPS_SERVICE}
+```
     
-13. To deploy the hello world app and create the Spring Boot application, run the following command and change the directory to hello world:
+   > **Note:** Make sure you are in the **scripts** directory.
+13. Run the following command to create the instance of Azure Spring Apps Enterprise.:
 
-     ```shell
-     cd hello-world/complete
-     ```
+```shell
+az spring create --name ${SPRING_APPS_SERVICE} \
+    --resource-group ${RESOURCE_GROUP} \
+    --location ${REGION} \
+    --sku Enterprise \
+    --enable-application-configuration-service \
+    --enable-service-registry \
+    --enable-gateway \
+    --enable-api-portal \
+    --enable-alv \
+    --enable-app-acc \
+    --build-pool-size S2 
+```
+   > **Note:** Creating the instance will take around **2-3** minutes.
 
-14. Run the following command to create the **hello-world** app instance and deploy it to Azure Spring Apps Enterprise:
+### Task 2: Configure Log Analytics for Azure Spring Apps
 
-     ```shell
-     az spring app create -n hello-world --assign-endpoint true
-     mvn clean package -DskipTests
-     az spring app deploy -n hello-world --artifact-path target/spring-boot-complete-0.0.1-SNAPSHOT.jar
-     cd ..
-     cd ..
-     ```
- 
-      > **Note:** Creating and deploying the hello-world app will take around **2-3** minutes.
+1. Create a Log Analytics Workspace to be used for your Azure Spring Apps service.
 
-15. Return to the Azure portal in the browser and select **Resource groups** from the Azure services menu.
+> Note: This step can be skipped if using an existing workspace
 
-    ![acme-fitness](Images/L1-e1-s15.png)
+```shell
+az configure --defaults \
+    group=${RESOURCE_GROUP} \
+    location=${REGION} \
+    spring=${SPRING_APPS_SERVICE}
+```
+
+2. Retrieve the resource ID for the recently create Azure Spring Apps Service and Log Analytics Workspace:
+
+```shell
+export LOG_ANALYTICS_RESOURCE_ID=$(az monitor log-analytics workspace show \
+    --resource-group ${RESOURCE_GROUP} \
+    --workspace-name ${LOG_ANALYTICS_WORKSPACE} \
+    --query id \
+    -o tsv)
+
+export SPRING_APPS_RESOURCE_ID=$(az spring show \
+    --name ${SPRING_APPS_SERVICE} \
+    --resource-group ${RESOURCE_GROUP} \
+    --query id \
+    -o tsv)
+```
+
+3. Configure diagnostic settings for the Azure Spring Apps Service:
+
+```shell
+az monitor diagnostic-settings create --name "send-logs-and-metrics-to-log-analytics" \
+    --resource ${SPRING_APPS_RESOURCE_ID} \
+    --workspace ${LOG_ANALYTICS_RESOURCE_ID} \
+    --logs '[
+         {
+           "category": "ApplicationConsole",
+           "enabled": true,
+           "retentionPolicy": {
+             "enabled": false,
+             "days": 0
+           }
+         },
+         {
+            "category": "SystemLogs",
+            "enabled": true,
+            "retentionPolicy": {
+              "enabled": false,
+              "days": 0
+            }
+          },
+         {
+            "category": "IngressLogs",
+            "enabled": true,
+            "retentionPolicy": {
+              "enabled": false,
+              "days": 0
+             }
+           }
+       ]' \
+       --metrics '[
+         {
+           "category": "AllMetrics",
+           "enabled": true,
+           "retentionPolicy": {
+             "enabled": false,
+             "days": 0
+           }
+         }
+       ]'
+```
+
+> Note: For Git Bash users, this command may fail when resource IDs are misinterpreted as file paths because they begin with `/`. 
+> 
+> If the above command fails, try setting MSYS_NO_PATHCONV using:
+> 
+> `run this command on the terminal **export MSYS_NO_PATHCONV=1** and rerun the diagonstic configure command.
+
+### Task 3: Configure Application Configuration Service
+
+1. Create a configuration repository for Application Configuration Service using the Azure CLI:
+
+```shell
+az spring application-configuration-service git repo add --name acme-fitness-store-config \
+    --label main \
+    --patterns "catalog/default,catalog/key-vault,identity/default,identity/key-vault,payment/default" \
+    --uri "https://github.com/Azure-Samples/acme-fitness-store-config"
+```
+
+### Task 4: Configure Tanzu Build Service
+
+
+1. Make sure you are operating from the ./scripts folder
+
+```shell
+pwd
+```
+> Should show something like:
+
+```
+./source-code/acme-fitness-store/azure-spring-apps-enterprise/scripts
+```
+
+2. Create a custom builder in Tanzu Build Service using the Azure CLI:
+
+```shell
+az spring build-service builder create -n ${CUSTOM_BUILDER} \
+    --builder-file ../resources/json/tbs/builder.json \
+    --no-wait
+```
+
+### Task 5: Create applications in Azure Spring Apps
+
+1. Create an application for each service:
+
+```shell
+az spring app create --name ${CART_SERVICE_APP} --instance-count 1 --memory 1Gi &
+az spring app create --name ${ORDER_SERVICE_APP} --instance-count 1 --memory 1Gi &
+az spring app create --name ${PAYMENT_SERVICE_APP} --instance-count 1 --memory 1Gi &
+az spring app create --name ${CATALOG_SERVICE_APP} --instance-count 1 --memory 1Gi &
+```
+
+2. Then, create an app for the Front End: 
+
+```shell
+az spring app create --name ${FRONTEND_APP} --instance-count 1 --memory 1Gi
+```
+
+> At this time, wait until control is passed back to your console before proceeding. Please check the Portal to make sure ALL services (4 Services & Frontend App) are created.  Should look something like:
+
+
+
+### Task 6: Bind to Application Configuration Service
+
+1. Several applications require configuration from Application Configuration Service, so create
+the bindings:
+
+```shell
+az spring application-configuration-service bind --app ${PAYMENT_SERVICE_APP}
+az spring application-configuration-service bind --app ${CATALOG_SERVICE_APP}
+```
+
+### Task 7: Bind to Service Registry
+
+1. Several application require service discovery using Service Registry, so create
+the bindings:
+
+```shell
+az spring service-registry bind --app ${PAYMENT_SERVICE_APP}
+az spring service-registry bind --app ${CATALOG_SERVICE_APP}
+```
+
+### Task 8: Configure Spring Cloud Gateway
+
+1. Assign an endpoint and update the Spring Cloud Gateway configuration with API
+information:
+
+```shell
+az spring gateway update --assign-endpoint true
+export GATEWAY_URL=$(az spring gateway show --query properties.url -o tsv)
     
-16. Under the Resource groups page, select **Modernize-java-apps**.
-
-    ![acme-fitness](Images/mja-verify-rg.png) 
-    
-17. Under your resource group page, select **azure-spring-apps-<inject key="DeploymentID" enableCopy="false" />** instance from the right-hand side under the Resources section.   
-
-    ![acme-fitness](Images/mja-lab1-ex1-step17.png) 
-
-18. Click on **Apps** under the **Settings** section of the navigation pane and select **hello-world**.
-
-    ![acme-fitness](Images/hrlloword.png)
-
-19. On the Overview page, find the **Test endpoint** under the **Essentials** section, and click on the **link** to browse the application.
-
-    ![acme-fitness](Images/testend.png)
-    
-20. A new browser tab will open, and you should be able to see your **hello world** app successfully deployed. 
-   
-    ![acme-fitness](Images/Ex1-T2-S6.png)    
-    
-
-### Task 2: Deploy a Frontend Application
-
- In this section, you are going to deploy the front end of ACME-FITNESS (the demo application that you will be using in this lab), configure it with Spring Cloud Gateway (SCG), and validate that you are able to access the front end. You will create a Spring Cloud Gateway instance for Acme-Fitness and connect all the frontend and backend services to this gateway instance. This way, the gateway instance acts as the proxy for any requests that are targeted towards the Acme-Fitness application. Routing rules bind endpoints in the request to the backend applications. In the task below, you will also create a rule in SCG for the frontend app.
-
-The diagram below shows the final result once this section is complete:
-
-   ![](Images/upd-frontend.png)
-    
-> **Please note that we have already deployed the Azure Spring app and created the required frontend app to save time during the lab.**
- 
-1. To assign a public endpoint and update the Spring Cloud Gateway configuration with API information, run the following command:
-
-   ```shell
-   az spring gateway update --assign-endpoint true
-   export GATEWAY_URL=$(az spring gateway show | jq -r '.properties.url')
-    
-   az spring gateway update \
+az spring gateway update \
     --api-description "Acme Fitness Store API" \
     --api-title "Acme Fitness Store" \
     --api-version "v1.0" \
     --server-url "https://${GATEWAY_URL}" \
     --allowed-origins "*" \
     --no-wait
-   ```
+```
 
-    ![](Images/mjv2-7-new.png)
+### Task 9: Create  routing rules for the applications:
+
+1. Copy the commmand and paste into the terminal to configure the routing
+
+```shell
+az spring gateway route-config create \
+    --name ${CART_SERVICE_APP} \
+    --app-name ${CART_SERVICE_APP} \
+    --routes-file ../resources/json/routes/cart-service.json
     
-   > **Note:** Please be aware that the below commands can run for up to two minutes. Hold off until the commands have been completed.
+az spring gateway route-config create \
+    --name ${ORDER_SERVICE_APP} \
+    --app-name ${ORDER_SERVICE_APP} \
+    --routes-file ../resources/json/routes/order-service.json
 
-1. Run the following command to create a routing rule for the frontend application:
-   
-   ```shell
-   az spring gateway route-config create \
+az spring gateway route-config create \
+    --name ${CATALOG_SERVICE_APP} \
+    --app-name ${CATALOG_SERVICE_APP} \
+    --routes-file ../resources/json/routes/catalog-service.json
+
+az spring gateway route-config create \
     --name ${FRONTEND_APP} \
     --app-name ${FRONTEND_APP} \
-    --routes-file ./routes/frontend.json
-   ```
-   ![](Images/frontend-route.png)
+    --routes-file ../resources/json/routes/frontend.json
+```
 
-1. Run the following command to deploy and build the frontend application with its required parameters:
-   
-   ```shell
-   az spring app deploy --name ${FRONTEND_APP} \
-    --source-path ./apps/acme-shopping 
-   ```
-   ![](Images/frontend-deploy.png)
-   
-   > **Note:** Deploying the application will take approximately **2-3** minutes.
+### Task 10: Build and Deploy Polyglot Applications
 
-1. Run the following command. Copy the output URL and paste it in a browser.
+1. Deploy and build each application, specifying its required parameters
 
-   ```shell
-   echo "https://${GATEWAY_URL}"
-   ```
-   ![](Images/mjv2-10.png)
-  
-   > **Note:** If you see the ACME-FITNESS home page displayed below, then it means that your frontend app and its corresponding route in SCG are configured correctly and deployed successfully. Explore the application, but notice that not everything is functioning yet. Continue on to the next exercise to configure the rest of the functionality.
-    
-   ![](Images/acme-fitness-homepage.png)
-      
+```shell
+# Deploy Payment Service
+az spring app deploy --name ${PAYMENT_SERVICE_APP} \
+    --config-file-pattern payment/default \
+    --source-path ../../apps/acme-payment \
+    --build-env BP_JVM_VERSION=17
 
-### Task 3: Deploy Backend Applications
+# Deploy Catalog Service
+az spring app deploy --name ${CATALOG_SERVICE_APP} \
+    --config-file-pattern catalog/default \
+    --source-path ../../apps/acme-catalog \
+    --build-env BP_JVM_VERSION=17
 
-In this section, you are going to deploy the backend apps for the ACME-FITNESS application. You will also update the rules for these backend apps in Spring Cloud Gateway and configure these apps to talk to the Application Configuration Service and Service Registry. The Application Configuration Service is a feature of Azure Spring Apps Enterprise that makes Spring Apps configuration server capabilities available in a polyglot way. ASA-E internally uses the Tanzu Service Registry for dynamic service discovery.
+# Deploy Order Service
+az spring app deploy --name ${ORDER_SERVICE_APP} \
+    --builder ${CUSTOM_BUILDER} \
+    --source-path ../../apps/acme-order 
 
-The diagram below shows the final result once this section is complete:
+# Deploy Cart Service 
+az spring app deploy --name ${CART_SERVICE_APP} \
+    --builder ${CUSTOM_BUILDER} \
+    --env "CART_PORT=8080" \
+    --source-path ../../apps/acme-cart 
 
-   ![](Images/upd-scg-frontend-backend.png)
+# Deploy Frontend App
+az spring app deploy --name ${FRONTEND_APP} \
+    --builder ${CUSTOM_BUILDER} \
+    --source-path ../../apps/acme-shopping 
+```
 
-> **Please note that we have already deployed the Azure Spring app and created the required backend apps to save time during the lab.**
+> Note: Deploying all applications will take 5-10 minutes
 
-1. Run the following command to bind the spring applications to the Application Configuration Service:
+### Task 11: Access the Application through Spring Cloud Gateway
 
-   ```shell
-   az spring application-configuration-service bind --app ${PAYMENT_SERVICE_APP}
-   az spring application-configuration-service bind --app ${CATALOG_SERVICE_APP}
-   ```
-    
-   ![](Images/mjv2-5.png)
-   
-   > **Note:** Please note that the above commands can run for up to two minutes. 
+1. Retrieve the URL for Spring Cloud Gateway and open it in a browser, paste the command in terminal and copy the url and browse.
 
-1. Run the following command to bind the spring applications to the Service Registry:
+```shell
+echo "https://${GATEWAY_URL}"
+```
 
-   ```shell
-   az spring service-registry bind --app ${PAYMENT_SERVICE_APP}
-   az spring service-registry bind --app ${CATALOG_SERVICE_APP}
-   ```
+> You should see the ACME Fitness Store Application
 
-   ![](Images/mjv2-6.png)
+### Task 12: Explore the API using API Portal
 
-   > **Note:** Please note that the above commands can take up to two minutes to complete.
+1. Assign an endpoint to API Portal and open it in a browser:
 
-1. Run the following command to create routing rules for all backend applications:
+```shell
+az spring api-portal update --assign-endpoint true
+export PORTAL_URL=$(az spring api-portal show --query properties.url -o tsv)
 
-    ```shell
-    az spring gateway route-config create \
-      --name ${CART_SERVICE_APP} \
-      --app-name ${CART_SERVICE_APP} \
-      --routes-file ./routes/cart-service.json
-    
-    az spring gateway route-config create \
-      --name ${ORDER_SERVICE_APP} \
-      --app-name ${ORDER_SERVICE_APP} \
-      --routes-file ./routes/order-service.json
-
-   az spring gateway route-config create \
-      --name ${CATALOG_SERVICE_APP} \
-      --app-name ${CATALOG_SERVICE_APP} \
-      --routes-file ./routes/catalog-service.json
-   ```
-   
-   > **Note:** Routing rules bind endpoints in the request to the backend applications. For example, in the Cart route below, the routing rule indicates any requests to /cart/** endpoint get routed to the backend Cart App.
-
-   ![](Images/upd-mjv2-8.png)
-   
-   > **Note:** Please note that the above commands can run for up to two minutes. 
-
-1. Run the following command to deploy and build each backend application with its required parameters:
-
-    ```shell
-    # Deploy Payment Service
-    az spring app deploy --name ${PAYMENT_SERVICE_APP} \
-       --config-file-pattern payment/default \
-       --source-path ./apps/acme-payment \
-       --build-env BP_JVM_VERSION=17
-
-    # Deploy Catalog Service
-    az spring app deploy --name ${CATALOG_SERVICE_APP} \
-       --config-file-pattern catalog/default \
-       --source-path ./apps/acme-catalog \
-       --build-env BP_JVM_VERSION=17
-
-    # Deploy Order Service
-    az spring app deploy --name ${ORDER_SERVICE_APP} \
-       --source-path ./apps/acme-order 
-
-    # Deploy Cart Service 
-    az spring app deploy --name ${CART_SERVICE_APP} \
-       --env "CART_PORT=8080" \
-       --source-path ./apps/acme-cart 
-    ```
-
-   > **Note:** Deploying all applications will take approximately **10-15** minutes.
-
-   ![](Images/mjv2-9-new.png)
-
-1. Run the following command to get the Gateway URL.
-
-   ```shell
-   echo "https://${GATEWAY_URL}"
-   ```
-   ![](Images/mjv2-10.png)
-
-1. Copy the Gateway URL and paste it into a new browser, and then you should see the ACME FITNESS Store application. Now that all the required apps are deployed, you should be able to open the home page and access it through the entire app. Explore the application, but notice that not everything is functioning yet. Continue to Lab 2 to configure Single Sign-On to enable the rest of the functionality (features like logging in, adding items to the cart, or placing an order).
-
-   ![](Images/mjv2-11.png)
-
-1. To assign an endpoint to API Portal, move back to Git Bash and run the following command:
-
-   ```shell 
-   az spring api-portal update --assign-endpoint true
-   export PORTAL_URL=$(az spring api-portal show | jq -r '.properties.url')
-   ```
-
-1. Run the following command to get the API Portal URL.
-
-   ```shell
-   echo "https://${PORTAL_URL}"
-   ```
-   
-   ![](Images/mjv2-12-new.png)
-   
-1. Copy the URL and paste it into a new browser, and then you should see the API portal for the ACME Fitness Store application.
-
-    ![](Images/api1.png)   
-    
- > **Note:** After finishing the exercise, be sure not to close the Git Bash window.
+echo "https://${PORTAL_URL}"
+```
 
 Now, click on **Next** in the lab guide section in the bottom right corner to jump to the next exercise instructions.
