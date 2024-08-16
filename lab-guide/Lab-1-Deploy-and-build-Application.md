@@ -19,33 +19,33 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 
 3. Once the Git Bash is open, please continue with the next step.
 
-4. Run the following command to remove previous versions and install the latest Azure Spring Apps Enterprise tier extension:
+4. Run the following command to remove previous versions and install the latest Azure Spring Apps Enterprise tier extension.
 
 ```shell
   az extension remove --name spring-cloud
   az extension add --name spring
 ```
     
-5. To change the directory to the sample app repository in your shell, run the following command in the Bash shell pane: 
+5. To change the directory to the sample app repository in your shell, run the following command in the Bash shell pane.
 
 ```shell
   cd source-code/acme-fitness-store/azure-spring-apps-enterprise/scripts
 ```
     
-6. Run the following command to create a bash script with environment variables by making a copy of the supplied template:
+6. Run the following command to create a bash script with environment variables by making a copy of the supplied template.
 
 ```shell
   cp ./azure/setup-env-variables-template.sh ./azure/setup-env-variables.sh
 ```
 
-7. To open the `./scripts/setup-env-variables.sh` file, run the following command:
+7. To open the `./scripts/setup-env-variables.sh` file, run the following command.
 
 ```shell
   vi setup-env-variables.sh
 ```
    >**Note**: If you face any issues while editing the file please check at the bottom of the file if it is in edit mode or not, if not in edit mode please hit on **i** key of your keyboard to go to the edit mode. once the updates are done to save the file please do **ctrl+c** and write **:wq!**  this will save the file or if you dont want to save the file do **ctrl_c** and write **:q!**.
 
-8. Update the following variables in the setup-env-variables.sh file by replacing the following values and **Save** it using **Ctrl+S** key and **Close** the file:
+8. Update the following variables in the setup-env-variables.sh file by replacing the following values and **Save** it using **Ctrl+S** key and **Close** the file.
 
    * SubscriptionID: **<inject key="Subscription Id" enableCopy="true"/>**
    * Spring App Name: **<inject key="Spring App Name" enableCopy="true"/>**
@@ -61,13 +61,13 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
    
    ![](Images/mja-setup-env-variables.png)
 
-9. Run the following command to move back to the acme-fitness-store directory and then set up the environment:
+9. Run the following command to move back to the acme-fitness-store directory and then set up the environment.
   
 ```shell
   source ./setup-env-variables.sh
 ``` 
   
-10. Run the following command to log in to Azure:
+10. Run the following command to log in to Azure.
 
 ```shell
   az login
@@ -80,7 +80,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
    > Close the tab when you see the successful login message and proceed with the next command.
 
 
-11. Run the following commands to get the list of subscriptions and to set your subscription:
+11. Run the following commands to get the list of subscriptions and to set your subscription.
 
     * Replace ${SUBSCRIPTION} with the SubscriptionID: **<inject key="Subscription Id" enableCopy="true"/>**
 
@@ -91,7 +91,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
     
    ![](Images/mjv2-4.png)
    
-12. Now, run the following command to set your default resource group name and cluster name:
+12. Now, run the following command to set your default resource group name and cluster name.
 
 ```shell
   az configure --defaults \
@@ -101,7 +101,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 ```
     
    > **Note:** Make sure you are in the **scripts** directory.
-13. Run the following command to create the instance of Azure Spring Apps Enterprise.:
+13. Run the following command to create the instance of Azure Spring Apps Enterprise.
 
 ```shell
 az spring create --name ${SPRING_APPS_SERVICE} \
@@ -131,7 +131,7 @@ az configure --defaults \
     spring=${SPRING_APPS_SERVICE}
 ```
 
-2. Retrieve the resource ID for the recently create Azure Spring Apps Service and Log Analytics Workspace:
+2. Retrieve the resource ID for the recently create Azure Spring Apps Service and Log Analytics Workspace.
 
 ```shell
 export LOG_ANALYTICS_RESOURCE_ID=$(az monitor log-analytics workspace show \
@@ -147,7 +147,7 @@ export SPRING_APPS_RESOURCE_ID=$(az spring show \
     -o tsv)
 ```
 
-3. Configure diagnostic settings for the Azure Spring Apps Service:
+3. Configure diagnostic settings for the Azure Spring Apps Service.
 
 ```shell
 az monitor diagnostic-settings create --name "send-logs-and-metrics-to-log-analytics" \
@@ -199,7 +199,7 @@ az monitor diagnostic-settings create --name "send-logs-and-metrics-to-log-analy
 
 ### Task 3: Configure Application Configuration Service
 
-1. Create a configuration repository for Application Configuration Service using the Azure CLI:
+1. Create a configuration repository for Application Configuration Service using the Azure CLI.
 
 ```shell
 az spring application-configuration-service git repo add --name acme-fitness-store-config \
@@ -222,7 +222,7 @@ pwd
 ./source-code/acme-fitness-store/azure-spring-apps-enterprise/scripts
 ```
 
-2. Create a custom builder in Tanzu Build Service using the Azure CLI:
+2. Create a custom builder in Tanzu Build Service using the Azure CLI.
 
 ```shell
 az spring build-service builder create -n ${CUSTOM_BUILDER} \
@@ -232,7 +232,7 @@ az spring build-service builder create -n ${CUSTOM_BUILDER} \
 
 ### Task 5: Create applications in Azure Spring Apps
 
-1. Create an application for each service:
+1. Create an application for each service.
 
 ```shell
 az spring app create --name ${CART_SERVICE_APP} --instance-count 1 --memory 1Gi &
@@ -241,7 +241,7 @@ az spring app create --name ${PAYMENT_SERVICE_APP} --instance-count 1 --memory 1
 az spring app create --name ${CATALOG_SERVICE_APP} --instance-count 1 --memory 1Gi &
 ```
 
-2. Then, create an app for the Front End: 
+2. Then, create an app for the Front End.
 
 ```shell
 az spring app create --name ${FRONTEND_APP} --instance-count 1 --memory 1Gi
@@ -253,8 +253,7 @@ az spring app create --name ${FRONTEND_APP} --instance-count 1 --memory 1Gi
 
 ### Task 6: Bind to Application Configuration Service
 
-1. Several applications require configuration from Application Configuration Service, so create
-the bindings:
+1. Several applications require configuration from Application Configuration Service, so create the bindings.
 
 ```shell
 az spring application-configuration-service bind --app ${PAYMENT_SERVICE_APP}
@@ -263,8 +262,7 @@ az spring application-configuration-service bind --app ${CATALOG_SERVICE_APP}
 
 ### Task 7: Bind to Service Registry
 
-1. Several application require service discovery using Service Registry, so create
-the bindings:
+1. Several application require service discovery using Service Registry, so create the bindings.
 
 ```shell
 az spring service-registry bind --app ${PAYMENT_SERVICE_APP}
@@ -273,8 +271,7 @@ az spring service-registry bind --app ${CATALOG_SERVICE_APP}
 
 ### Task 8: Configure Spring Cloud Gateway
 
-1. Assign an endpoint and update the Spring Cloud Gateway configuration with API
-information:
+1. Assign an endpoint and update the Spring Cloud Gateway configuration with API information.
 
 ```shell
 az spring gateway update --assign-endpoint true
@@ -291,7 +288,7 @@ az spring gateway update \
 
 ### Task 9: Create  routing rules for the applications:
 
-1. Copy the commmand and paste into the terminal to configure the routing
+1. Copy the commmand and paste into the terminal to configure the routing.
 
 ```shell
 az spring gateway route-config create \
@@ -317,7 +314,7 @@ az spring gateway route-config create \
 
 ### Task 10: Build and Deploy Polyglot Applications
 
-1. Deploy and build each application, specifying its required parameters
+1. Deploy and build each application, specifying its required parameters.
 
 ```shell
 # Deploy Payment Service
@@ -363,7 +360,7 @@ echo "https://${GATEWAY_URL}"
 
 ### Task 12: Explore the API using API Portal
 
-1. Assign an endpoint to API Portal and open it in a browser:
+1. Assign an endpoint to API Portal and open it in a browser.
 
 ```shell
 az spring api-portal update --assign-endpoint true
@@ -372,4 +369,4 @@ export PORTAL_URL=$(az spring api-portal show --query properties.url -o tsv)
 echo "https://${PORTAL_URL}"
 ```
 
-Now, click on **Next** in the lab guide section in the bottom right corner to jump to the next exercise instructions.
+> Now, click on **Next** in the lab guide section in the bottom right corner to jump to the next exercise instructions.
