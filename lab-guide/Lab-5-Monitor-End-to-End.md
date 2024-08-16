@@ -152,40 +152,38 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
 4. In the **Logs** blade (1), paste the below Kusto query **(2)** and click on **Run (3)** to see the application logs:
 
 ```sql
-    AppPlatformLogsforSpring 
-    | where TimeGenerated > ago(24h) 
-    | limit 500
-    | sort by TimeGenerated
-    | project TimeGenerated, AppName, Log
+ AppPlatformLogsforSpring 
+ | where TimeGenerated > ago(24h) 
+ | limit 500
+ | sort by TimeGenerated
+ | project TimeGenerated, AppName, Log
 ```
 
-   >**Note:** If you see the message "The query was stopped", then please wait for a few minutes and try again as there might be a chance that services are still being deployed.
+>**Note:** If you see the message "The query was stopped", then please wait for a few minutes and try again as there might be a chance that services are still being deployed.
    
    ![](Images/mjv2-61.png)
 
 5. Click on `+` **(1)** to create the new query. Now paste the below Kusto query **(2)** and click on **Run (3)** to see `catalog-service` application logs:
 
 ```sql
-    AppPlatformLogsforSpring 
-    | where AppName has "catalog-service"
-    | limit 500
-    | sort by TimeGenerated
-    | project TimeGenerated, AppName, Log
+ AppPlatformLogsforSpring 
+ | where AppName has "catalog-service"
+ | limit 500
+ | sort by TimeGenerated
+ | project TimeGenerated, AppName, Log
 ```
-   
-   ![](Images/mjv2-62-new.png)
+  ![](Images/mjv2-62-new.png)
 
 6. Click on `+` **(1)** to create the new query. Now paste the below Kusto query **(2)** and click on **Run (3)** to see errors and exceptions thrown by each app:
   
 ```sql
-    AppPlatformLogsforSpring 
-    | where Log contains "error" or Log contains "exception"
-    | extend FullAppName = strcat(ServiceName, "/", AppName)
-    | summarize count_per_app = count() by FullAppName, ServiceName, AppName, _ResourceId
-    | sort by count_per_app desc 
-    | render piechart
+ AppPlatformLogsforSpring 
+ | where Log contains "error" or Log contains "exception"
+ | extend FullAppName = strcat(ServiceName, "/", AppName)
+ | summarize count_per_app = count() by FullAppName, ServiceName, AppName, _ResourceId
+ | sort by count_per_app desc 
+ | render piechart
 ```
-
    ![](Images/mjv2-63-new.png)
 
 7. Click on `+` **(1)** to create the new query. Now paste the below Kusto query **(2)** and click on **Run (3)** to see all the inbound calls into Azure Spring Apps:
@@ -195,7 +193,6 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
     | project TimeGenerated, RemoteAddr, Host, Request, Status, BodyBytesSent, RequestTime, ReqId, RequestHeaders
     | sort by TimeGenerated
 ```
-   
    ![](Images/mjv2-64-new.png)
 
 8. Click on `+` **(1)** to create the new query. Now paste the below Kusto query **(2)** and click on **Run (3)** to see all the logs from Spring Cloud Gateway managed by Azure Spring Apps:
@@ -205,7 +202,6 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
     | where LogType contains "SpringCloudGateway"
     | project TimeGenerated,Log
 ```
-
    ![](Images/mjv2-65-new.png)
 
 9. Click on `+` **(1)** to create the new query. Now paste the below Kusto query **(2)** and click on **Run (3)** to see all the logs from the Spring Cloud Service Registry managed by Azure Spring Apps:
@@ -215,7 +211,6 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
     | where LogType contains "ServiceRegistry"
     | project TimeGenerated, Log
 ```
-
    ![](Images/mjv2-66-new.png)
    
 
