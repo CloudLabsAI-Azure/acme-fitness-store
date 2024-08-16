@@ -35,6 +35,7 @@ az ad sp create --id ${APPLICATION_ID}
 5. Prepare your environment for SSO Deployments and Set the environment using the provided script and verify the environment variables are set.
 
 ```shell
+chmod +x ./setup-sso-variables-ad.sh
 source ./setup-sso-variables-ad.sh
 ```
 
