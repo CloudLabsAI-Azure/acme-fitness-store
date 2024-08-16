@@ -1,64 +1,170 @@
-## Lab 7:  Set Request Rate Limits (Optional)
-Duration: 15 minutes
+## Lab 7:  Automate from idea to production
+Duration: 40 minutes
 
 In this lab, you will use Spring Cloud Gateway filters to apply rate limiting to your API.
 
-### Task 1: Spring Cloud Gateway Rate Limit Filter (Read-only)
+### Task 1: Prepare your environment for creating a Storage Account
 
-Spring Cloud Gateway includes route filters from the Open Source version as well as several additional route filters. One of these additional filters is the [RateLimit: Limiting user requests filter](https://docs.vmware.com/en/VMware-Spring-Cloud-Gateway-for-Kubernetes/1.1/scg-k8s/GUID-route-filters.html#ratelimit-limiting-user-requests-filter). The RateLimit filter limits the number of requests allowed per route during a time window.
+1. Make sure you are operating from the ./scripts folder.
 
-   When defining a route, you can add the RateLimit filter by including it in the list of filters for the route. The filter accepts four options:
+```shell
+cd ./scripts
+pwd
+```
+2. Create a bash script with environment variables by making a copy of the supplied template:.
 
-   * Number of requests accepted during the window.
-   * Duration of the window: by default milliseconds, but you can use the s, m, or h suffix to specify it in seconds, minutes, or hours.
-   * (Optional) User partition key: it's also possible to apply rate limiting per user, that is, different users can have their throughput allowed based on an identifier found in the request. Set whether the key is in a JWT claim or HTTP header with '' or '' syntax.
-   * (Optional) It is possible to rate limit by IP addresses. Note, that this cannot be combined with the rate-limiting per user.
+```shell
+cp ./setup-storage-env-variables-template.sh ./setup-storage-env-variables.sh
+```
 
-   > **Note:** The following example would limit all users to two requests every 5 seconds to the `/products` route.
+3. Using an editor of your choice, edit the file, (for the purposes of example we will use the nano editor), and add the following values.
 
-   ```json
-   {
-      "predicates": [
-         "Path=/products",
-         "Method=GET"
-      ],
-      "filters": [
-         "StripPrefix=0",
-         "RateLimit=2,5s"
-      ]
-   }
-   ```
+```shell
+vi `setup-storage-env-variables.sh` 
+```
+Enter the following information:
 
-When the limit is exceeded, the response will fail with `429 Too Many Requests` status.
+```shell
+export STORAGE_RESOURCE_GROUP='change-me'      # different resource group from previous steps
+export STORAGE_ACCOUNT_NAME='change-me'        # choose a name for your storage account
+```
 
-### Task 2: Update Spring Cloud Gateway Routes
+4. Then, set the environment.
 
-1. To apply the `RateLimit` filter to the `/products` route, run the following command:
+```shell
+source ./setup-storage-env-variables.sh
+```
 
-   ```bash
-   az spring gateway route-config update \
-      --name ${CATALOG_SERVICE_APP} \
-      --app-name ${CATALOG_SERVICE_APP} \
-      --routes-file azure/routes/catalog-service_rate-limit.json
-   ```
+5. Create a resource group to hold the Storage Account.
 
-   ![](Images/mjv2-30-new.png)
+```shell
+az group create \
+  --name ${STORAGE_RESOURCE_GROUP} \
+  --location ${REGION}
+```
+
+6. Create a Storage Account in resource group.
+
+```shell
+az storage account create \
+  --name ${STORAGE_ACCOUNT_NAME} \
+  --resource-group ${STORAGE_RESOURCE_GROUP} \
+  --location ${REGION} \
+  --sku Standard_RAGRS \
+  --kind StorageV2
+```
+
+7. Create a Storage Container within the Storage Account.
+
+```shell
+az storage container create \
+    --name terraform-state-container \
+    --account-name ${STORAGE_ACCOUNT_NAME} \
+    --auth-mode login
+```
+
+8. Create a service principal with enough scope/role to manage your Azure Spring Apps instance.
+
+```shell
+az ad sp create-for-rbac --name "change-me" \
+   --role contributor \
+   --scopes /subscriptions/${SUBSCRIPTION} \
+   --sdk-auth
+```
+
+  >**Note:** Make the name of the service principle something you will recognize.
+
+9. Copy the Result and save it for later use.
+
+```json
+{
+    "clientId": "<GUID>",
+    "clientSecret": "<GUID>",
+    "subscriptionId": "<GUID>",
+    "tenantId": "<GUID>",
+    "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+    "resourceManagerEndpointUrl": "https://management.azure.com/",
+    "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+    "galleryEndpointUrl": "https://gallery.azure.com/",
+    "managementEndpointUrl": "https://management.core.windows.net/"
+}
+```
+> This output will be needed as a secret value for the next step.   Save this off to a file, in a secure location that you can reference later.
+
+### Task 2: Add Secrets to GitHub Actions
+
+1. From the new browser tab, go to [GitHub](https://github.com/) and log in to your account.
+    > **Note:** If you don't have an account for GitHub, please sign up.
+
+1. After the login, go to [https://github.com/CloudLabsAI-Azure/acme-fitness-store](https://github.com/CloudLabsAI-Azure/acme-fitness-store) and click on `Fork`.
+
+   ![](Images/L8-t1-s2.png)
    
+1. On the Create a new fork page, click on Create fork. 
+
+1. Now you're going to add the secrets to your repo.
+
+1. From your repo, click on **Settings**.
+
+   ![](Images/lab8.png)
+
+1. Find **Secrets and variables** **(1)** under _Security_ on the left side of menu, and click on **Actions** **(2)**. After that Click on **New repository secret** **(3)**.
+  
+   ![](Images/secretsandvariables.png)
    
-   > **Note:** Make sure you are using the same Git Bash window without closing it from the previous exercise.
+1. Type `AZURE_CREDENTIALS` **(1)** for the Name of the secret, enter the following code under Secret and make sure to replace the values of **ClientId (Application Id)**, **ClientSecret (Secret Key)**, **Subscription_ID** and **TenantId (Directory ID)** **(2)** and then click on **Add Secret** **(3)**.   
 
-### Task 3: Verify Request Rate Limits
+     ```json
+    {
+        "clientId": "Application_ID",
+        "clientSecret": "Application_secret",
+        "subscriptionId": "Subscription_ID",
+        "tenantId": "TENANT_ID",
+        "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+        "resourceManagerEndpointUrl": "https://management.azure.com/",
+        "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+        "galleryEndpointUrl": "https://gallery.azure.com/",
+        "managementEndpointUrl": "https://management.core.windows.net/"
+    }
+    ```
+     
+     >**Note:** You can copy the **ClientId (Application Id)**, **ClientSecret (Secret Key)**, **Subscription_ID** and **TenantId (Directory ID)** from the Environment details page > Service principal details.
 
-1. To retrieve the URL for the `/products` route in Spring Cloud Gateway, use the following command:
+   ![](Images/Ex8-T2-S4.png)
 
-   ```bash
-   GATEWAY_URL=$(az spring gateway show | jq -r '.properties.url')
-   echo "https://${GATEWAY_URL}/products"
+1. In a similar way, you will add the following secrets to GitHub Actions:
+
+   | Secret Name | Secret value|
+   |:----------|:--------|
+   | `RESOURCE_GROUP`| Provide the RG name **<inject key="Resource Group Name" />**|
+   | `KEYVAULT`| Provide the Key vault name **<inject key="KeyVault Name" />**|
+   | `AZURE_LOCATION` | Provide the region **<inject key="Region" />**|
+   | `OIDC_JWK_SET_URI` | use the `JWK_SET_URI` |
+   | `OIDC_CLIENT_ID` | use the `CLIENT_ID` |
+   | `OIDC_CLIENT_SECRET` | use the `CLIENT_SECRET`|
+   | `OIDC_ISSUER_URI` | use the `ISSUER_URI`|
+ 
+    > **Note**: For the values of `OIDC_JWK_SET_URI`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, `OIDC_ISSUER_URI`, enter the values you have copied in your text editor in Lab 2.
+
+
+1. Add the secret `TF_BACKEND_CONFIG` to GitHub Actions with the value (replacing `${STORAGE_ACCOUNT_NAME}` and `${STORAGE_RESOURCE_GROUP}` with **<inject key="Resource Group Name" />**)   > When Completed, you should see something like (8 Secrets) as in below image provided:
+
+   ```text
+   resource_group_name  = "${STORAGE_RESOURCE_GROUP}"
+   storage_account_name = "${STORAGE_ACCOUNT_NAME}"
+   container_name       = "terraform-state-container"
+   key                  = "dev.terraform.tfstate"
    ```
+    ![](Images/GitHubSecretsSetup.jpg)
 
-     > **Note:** Copy the output URL and paste it into a new browser. Make several requests to the URL for `/products` within a five-second period to see requests fail with the status `429 Too Many Requests`.
-   
-   ![](Images/L7-t3-s1.png) 
+1. From your repo, click on **Actions**.
 
+1. Select **Deploy catalog** (1) under __Actions_ All workflows_ from the left side panel and click on **Run workflow** (2). After that Click on **Run workflow** (3) under _Branch: Azure_.
 
-Now, click on **Next** in the lab guide section in the bottom right corner to jump to the next exercise instructions.
+   ![](Images/L8-t3-s2.png)
+
+1. Each application has a `Deploy` workflow that will redeploy the application when changes are made to that application. An example output from the catalog service is shown below:
+
+   ![Output from the Deploy Catalog workflow](Images/final-result.png)
+
+> Now, click on **Next** in the lab guide section in the bottom right corner to jump to the next exercise instructions.
