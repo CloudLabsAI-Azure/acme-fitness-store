@@ -29,6 +29,9 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 5. To change the directory to the sample app repository in your shell, run the following command in the Bash shell pane.
 
 ```shell
+  mkdir source-code
+  cd source-code
+  git clone https://github.com/Azure-Samples/acme-fitness-store
   cd source-code/acme-fitness-store/azure-spring-apps-enterprise/scripts
 ```
     
