@@ -119,4 +119,4 @@ When the limit is exceeded, the response will fail with `429 Too Many Requests` 
    ![](Images/L7-t3-s1.png) 
 
 
-Now, click on **Next** in the lab guide section in the bottom right corner to jump to the next exercise instructions.
+> Now, click on **Next** in the lab guide section in the bottom right corner to jump to the next exercise instructions.
