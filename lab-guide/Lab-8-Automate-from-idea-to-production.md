@@ -1,90 +1,147 @@
-## Lab 8: Automate from Idea to Production (Optional)
+## Lab 8: Infuse AI into Fitness Store
 
-Duration: 15 minutes
+Duration: 30 minutes
 
-### Task 1: Setup GitHub Account and Settings
+### Prerequisites
+- JDK 17
+- Python 3
+- Maven
+- Azure CLI
+- An Azure subscription with access granted to Azure OpenAI (request access to Azure OpenAI [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu))
 
-1. From the new browser tab, go to [GitHub](https://github.com/) and log in to your account.
-    > **Note:** If you don't have an account for GitHub, please sign up.
+### Task 1: Prepare the Environment Variables
 
-1. After the login, go to [https://github.com/CloudLabsAI-Azure/acme-fitness-store](https://github.com/CloudLabsAI-Azure/acme-fitness-store) and click on `Fork`.
+1. Please navigate to the root folder of this cloned repository.
 
-   ![](Images/L8-t1-s2.png)
+2. Copy the AI environment variables template file, make sure you are in ./scripts directory.
+
+```bash
+ cp ./setup-ai-env-variables-template.sh ./setup-ai-env-variables.sh
+```
+
+3. Update the values in `./setup-ai-env-variables.sh` with your own values, as configured in Azure OpenAI instance:
+
+```bash
+  vi setup-ai-env-variables.sh
+```
+ - Name, e.g. `my-ai`
+ - Endpoint, e.g. `https://my-ai.openai.azure.com`
+ - Chat deployment ID, e.g. `gpt-35-turbo-16k``
+ - Embedding deployment ID, e.g. `text-embedding-ada-002``
+ - OpenAI API Key, to be updated once you create AI instance (in next step)
+
+### Task 2: Prepare Azure OpenAI 
+
+1. Run the following command to create an Azure OpenAI resource in the the resource group.
+
+```bash
+   source ./setup-env-variables.sh
+   export OPENAI_RESOURCE_NAME=<choose-a-resource-name>
+   az cognitiveservices account create \
+      -n ${OPENAI_RESOURCE_NAME} \
+      -g ${RESOURCE_GROUP} \
+      -l eastus \
+      --kind OpenAI \
+      --sku s0 \
+      --custom-domain ${OPENAI_RESOURCE_NAME}   
+```
    
-1. On the Create a new fork page, click on Create fork.   
+   > You can check the resource has been created in Azure Portal under `Azure AI Services`, e.g.
 
-### Task 2: Add Secrets to GitHub Actions
+   ![A screenshot of the Azure AI services.](./Images/openai-azure-ai-services.png)
 
-1. Now you're going to add the secrets to your repo.
-
-1. From your repo, click on **Settings**.
-
-   ![](Images/lab8.png)
-
-1. Find **Secrets and variables** **(1)** under _Security_ on the left side of menu, and click on **Actions** **(2)**. After that Click on **New repository secret** **(3)**.
-  
-   ![](Images/secretsandvariables.png)
+2. Create the model deployments for `text-embedding-ada-002` and `gpt-35-turbo-16k` in your Azure OpenAI service.
    
-1. Type `AZURE_CREDENTIALS` **(1)** for the Name of the secret, enter the following code under Secret and make sure to replace the values of **ClientId (Application Id)**, **ClientSecret (Secret Key)**, **Subscription_ID** and **TenantId (Directory ID)** **(2)** and then click on **Add Secret** **(3)**.   
+```bash
+  az cognitiveservices account deployment create \
+     -g ${RESOURCE_GROUP} \
+     -n ${OPENAI_RESOURCE_NAME} \
+     --deployment-name text-embedding-ada-002 \
+     --model-name text-embedding-ada-002 \
+     --model-version "2"  \
+     --model-format OpenAI \
+     --scale-type "Standard" 
 
-     ```json
-    {
-        "clientId": "Application_ID",
-        "clientSecret": "Application_secret",
-        "subscriptionId": "Subscription_ID",
-        "tenantId": "TENANT_ID",
-        "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
-        "resourceManagerEndpointUrl": "https://management.azure.com/",
-        "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
-        "galleryEndpointUrl": "https://gallery.azure.com/",
-        "managementEndpointUrl": "https://management.core.windows.net/"
-    }
-    ```
-     
-     >**Note:** You can copy the **ClientId (Application Id)**, **ClientSecret (Secret Key)**, **Subscription_ID** and **TenantId (Directory ID)** from the Environment details page > Service principal details.
+  az cognitiveservices account deployment create \
+     -g ${RESOURCE_GROUP} \
+     -n ${OPENAI_RESOURCE_NAME} \
+     --deployment-name gpt-35-turbo-16k \
+     --model-name gpt-35-turbo-16k \
+     --model-version "0613"  \
+     --model-format OpenAI \
+     --scale-type "Standard"
+```
 
-   ![](Images/Ex8-T2-S4.png)
+   > Alternatively, you can click go to the link, e.g. https://oai.azure.com/
 
-1. In a similar way, you will add the following secrets to GitHub Actions:
+   ![A screenshot of the Azure AI Studio with no deployments.](./Images/openai-azure-ai-studio-deployments-01.png)
 
-   | Secret Name | Secret value|
-   |:----------|:--------|
-   |`APP_SERVICE`| Provide app service name as **<inject key="Spring App Name" />**|
-   | `RESOURCE_GROUP`| Provide the RG name **<inject key="Resource Group Name" />**|
-   | `KEYVAULT`| Provide the Key vault name **<inject key="KeyVault Name" />**|
-   | `AZURE_LOCATION` | Provide the region **<inject key="Region" />**|
-   | `OIDC_JWK_SET_URI` | use the `JWK_SET_URI` |
-   | `OIDC_CLIENT_ID` | use the `CLIENT_ID` |
-   | `OIDC_CLIENT_SECRET` | use the `CLIENT_SECRET`|
-   | `OIDC_ISSUER_URI` | use the `ISSUER_URI`|
+   ![A screenshot of the Azure AI Studio creating first deployment.](./Images/openai-azure-ai-studio-deployments-02.png)
 
-    ![](Images/secrets-count.png)
- 
-    > **Note**: For the values of `OIDC_JWK_SET_URI`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, `OIDC_ISSUER_URI`, enter the values you have copied in your text editor in Lab 2.
+   ![A screenshot of the Azure AI Studio creating second deployment.](./Images/openai-azure-ai-studio-deployments-03.png)
 
+3. Update the values in `scripts/setup-ai-env-variables.sh`, e.g.
+    * for Endpoint and API KEY - check under Azure Portal OpenAI instances in `Keys and Endpoint` section
+    ![A screenshot of the Azure Portal OpenAI instance.](./Images/openai-azure-ai-services-api-key.png)    
+    * for `AI_APP` use default name, e.g. `assist-service`
+    
+4. You can get the endpoint by querying the `cognitiveservices` from Azure CLI, e.g.
 
-1. Add the secret `TF_BACKEND_CONFIG` to GitHub Actions with the value (replacing `${STORAGE_ACCOUNT_NAME}` and `${STORAGE_RESOURCE_GROUP}` with **<inject key="Resource Group Name" />**):
+```bash
+   az cognitiveservices account show \
+     --name ${OPENAI_RESOURCE_NAME} \
+     --resource-group ${RESOURCE_GROUP} \
+     --output json | jq -r '.properties.endpoint' 
+```
 
-   ```text
-   resource_group_name  = "${STORAGE_RESOURCE_GROUP}"
-   storage_account_name = "${STORAGE_ACCOUNT_NAME}"
-   container_name       = "terraform-state-container"
-   key                  = "dev.terraform.tfstate"
-   ```
+### Task 3: Build and Deploy Assist app to Azure Spring Apps
 
-### Task 3: Run GitHub Actions
+1. Configure AI environment variables, e.g. 
 
-1. From your repo, click on **Actions**.
+```bash
+   source ./setup-ai-env-variables.sh
+```
 
-1. Select **Deploy catalog** (1) under __Actions_ All workflows_ from the left side panel and click on **Run workflow** (2). After that Click on **Run workflow** (3) under _Branch: Azure_.
+2. Create the new AI service `assist-service`, e.g.
 
-   ![](Images/L8-t3-s2.png)
+```bash    
+    az spring app create --name ${AI_APP} --instance-count 1 --memory 1Gi
+```
 
-1. Each application has a `Deploy` workflow that will redeploy the application when changes are made to that application. An example output from the catalog service is shown below:
+3.  Configure Spring Cloud Gateway with the `assist-service` routes, e.g.
 
-   ![Output from the Deploy Catalog workflow](Images/final-result.png)
+```bash
+    az spring gateway route-config create \
+        --name ${AI_APP} \
+        --app-name ${AI_APP} \
+        --routes-file /azure-spring-apps-enterprise/resources/json/routes/assist-service.json
+```
+    
+4. Deploy the application, e.g. 
 
-1. Once the GitHub workflow is completed, navigate back to your web app to see the new **Catalog** option added to the website.
+```bash
+    az spring app deploy --name ${AI_APP} \
+        --source-path /apps/acme-assist \
+        --build-env BP_JVM_VERSION=17 \
+        --env \
+            SPRING_AI_AZURE_OPENAI_ENDPOINT=${SPRING_AI_AZURE_OPENAI_ENDPOINT} \
+            SPRING_AI_AZURE_OPENAI_API_KEY=${SPRING_AI_AZURE_OPENAI_API_KEY}
+```
 
+   >**Note:** For routes-file and source-path if you face any issues please crosscheck the paths and do modify the line of code accordingly for the route-file and source-path if command not able to find.
 
-## Lab Ends
+5. Test the `acme-fitness` application in the browser again. Go to `ASK TO FITASSIST` and converse with the assistant, e.g.
+
+```
+   I need a bike for a commute to work.
+```
+
+   ![A screenshot of the ACME Fitness Store.](./Images/homepage.png)
+
+6. Observe the output that was generated by the Assist application, e.g.
+
+   ![A screenshot of the ACME Fitness Store with FitAssist](./Images/homepage-fitassist.png)
+
+   >**Note:** Output of the AI generated texts can be vary from the output shown in the image.
+
+## **Congratulations! you have successfully completed the lab.**
