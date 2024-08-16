@@ -173,18 +173,18 @@ az spring connection create redis \
     
      >**Note:** You can ignore any warning related to auth. 
 
-      ```shell
-      az spring connection create redis \
-         --resource-group ${RESOURCE_GROUP} \
-         --service ${SPRING_APPS_SERVICE} \
-         --connection $CART_SERVICE_CACHE_CONNECTION \
-         --app ${CART_SERVICE_APP} \
-         --deployment default \
-         --tg ${RESOURCE_GROUP} \
-         --server ${AZURE_CACHE_NAME} \
-         --database 0 \
-         --client-type java 
-      ```
+```shell
+az spring connection create redis \
+  --resource-group ${RESOURCE_GROUP} \
+  --service ${SPRING_APPS_SERVICE} \
+  --connection $CART_SERVICE_CACHE_CONNECTION \
+  --app ${CART_SERVICE_APP} \
+  --deployment default \
+  --tg ${RESOURCE_GROUP} \
+  --server ${AZURE_CACHE_NAME} \
+  --database 0 \
+  --client-type java 
+```
 
 ### Task 3: Update Applications
 
@@ -194,11 +194,11 @@ In this task, you will update the affected applications to use the databases and
 
 1. Run the following command to restart the Catalog service for the Service Connector to take effect.
 
-   ```shell
-   az spring app restart --name ${CATALOG_SERVICE_APP}
-   ```
+```shell
+  az spring app restart --name ${CATALOG_SERVICE_APP}
+```
   
-    ![](Images/restart-catalog-new.png)
+   ![](Images/restart-catalog-new.png)
     
 2. To retrieve the PostgreSQL connection string and update the Catalog service, run the following command.
 
@@ -240,15 +240,15 @@ az spring app update \
     --env "CART_PORT=8080" "REDIS_CONNECTIONSTRING=${REDIS_CONN_STR}" "AUTH_URL=https://${GATEWAY_URL}"
 ```
   
-    ![](Images/mjv2-32-new.png)
+  ![](Images/mjv2-32-new.png)
   
 ### Task 4: View the persisted data 
 
 1. By adding a few items to your cart, you can confirm that cart data is now persisted in Redis. Then, restart the cart service by running the following command.
 
-   ```shell
-   az spring app restart --name ${CART_SERVICE_APP}
-   ``` 
+```shell
+  az spring app restart --name ${CART_SERVICE_APP}
+``` 
 
    ![](Images/mjv2-33-new.png)
 
@@ -262,9 +262,9 @@ az spring app update \
 
 3. Run the following command to restart the order service application.
 
-   ```shell
-   az spring app restart --name ${ORDER_SERVICE_APP}
-   ```
+```shell
+  az spring app restart --name ${ORDER_SERVICE_APP}
+```
 
    > **Note:** After finishing the exercise, be sure not to close the Git Bash window.
 
