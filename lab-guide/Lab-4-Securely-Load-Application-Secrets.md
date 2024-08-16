@@ -1,6 +1,6 @@
 ## Lab 4: Load Application Secrets using Key Vault
 
-Duration: 15 minutes
+Duration: 40 minutes
 
 In this lab, you will use Azure Key Vault to securely store and load secrets to connect to Azure services. The **Microsoft Azure Key Vault** service focuses on the security of the below subjects:
 
