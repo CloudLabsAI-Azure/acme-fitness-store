@@ -64,6 +64,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 9. Run the following command to move back to the acme-fitness-store directory and then set up the environment.
   
 ```shell
+  chmod +x ./setup-env-variables.sh
   source ./setup-env-variables.sh
 ``` 
   
