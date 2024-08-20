@@ -101,7 +101,7 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
 
    ![](Images/mjv2-51.png)
 
-5. Now, navigate to the `Performance/Dependencies` blade; you can see the performance number for dependencies, particularly SQL calls:
+5. Now, navigate to the `Performance/Dependencies` blade; you can see the performance number for dependencies:
 
    ![](Images/mjv2-52.png)
 
@@ -124,8 +124,6 @@ You can use `az spring app logs -h` to explore more parameters and log stream fu
 
    * `acme-catalog` application has the following custom metrics enabled:
    * @Timed: `store.products`
-   * `acem-payment` application has the following custom metrics enabled:
-   * @Timed: `store.payment`
 
 9. You can see these custom metrics in the `Metrics` blade:
 
