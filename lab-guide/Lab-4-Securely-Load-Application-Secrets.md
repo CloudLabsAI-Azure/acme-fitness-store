@@ -59,7 +59,7 @@ az keyvault secret set --vault-name ${KEY_VAULT} \
       
    ![](Images/mjv2-22-new.png)
 
-7. To retrieve and store Redis connection secrets in Key Vault, run the following command:
+7. To retrieve and store Redis connection secrets in Key Vault, run the following command.
 
 ```shell
 export REDIS_HOST=$(az redis show -n ${AZURE_CACHE_NAME} --query hostName -o tsv)
@@ -72,7 +72,8 @@ az keyvault secret set --vault-name ${KEY_VAULT} \
   --name "CART-REDIS-CONNECTION-STRING" --value "${REDIS_CONN_STR}"
 ```
 
-8. Run the following command to store SSO secrets in the Key Vault:
+8. Run the following command to store SSO secrets in the Key Vault.
+   
 ```shell
 az keyvault secret set --vault-name ${KEY_VAULT} \
     --name "SSO-PROVIDER-JWK-URI" --value ${JWK_SET_URI}
@@ -82,7 +83,7 @@ az keyvault secret set --vault-name ${KEY_VAULT} \
 
    ![](Images/mjv2-24-new.png)
 
-9. Run the following command to enable System-Assigned Identities for applications and export identities to the environment:
+9. Run the following command to enable System-Assigned Identities for applications and export identities to the environment.
 
 ```shell
 az spring app identity assign --name ${CART_SERVICE_APP} --system-assigned
@@ -101,7 +102,7 @@ export IDENTITY_SERVICE_APP_IDENTITY=$(az spring app show --name ${IDENTITY_SERV
 
    ![](Images/mjv2-25-new.png)
 
-10.  Run the following command to add an access policy to Azure Key Vault to allow Managed Identities to read secrets:
+10.  Run the following command to add an access policy to Azure Key Vault to allow Managed Identities to read secrets.
 
 ```shell
 az keyvault set-policy --name ${KEY_VAULT} \
