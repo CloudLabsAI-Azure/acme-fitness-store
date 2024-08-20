@@ -66,6 +66,8 @@ az spring app logs \
 
    ![](Images/mjv2-46.png)
 
+   > **Note:** You can ignore any warning related to app logs or if the output is not expected. you can proceed to next task.
+
 2. Run the following command by adding the `-f` parameter, so that you can get real-time log streaming from an app. Try log streaming for the Catalog Service.
 
 ```shell
