@@ -4,43 +4,39 @@
   "Files": [
     {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Getting-started.md",
-      "Order": 2
-    },
-    {
-      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Overview.md",
       "Order": 1
     },
     {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-1-Deploy-and-build-Application.md",
-      "Order": 3
+      "Order": 2
     },
     {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-2-Configure-Single-Sign-On.md",
-      "Order": 4
+      "Order": 3
     },
     {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-3-Integrate-the-Azure-Database-for-PostgreSQL-and-Azure-Cache-for-Redis.md",
-      "Order": 5
+      "Order": 4
     },
     {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-4-Securely-Load-Application-Secrets.md",
-      "Order": 6
+      "Order": 5
     },
     {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-5-Monitor-End-to-End.md",
-      "Order": 7
+      "Order": 6
     }, {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-6-Change-the-application.md",
-      "Order": 8
+      "Order": 7
     },
        
         {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-7-Set-Request-Rate-Limits.md",
-      "Order": 9
+      "Order": 8
     },
             {
       "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/Lab-8-Automate-from-idea-to-production.md",
-      "Order": 10
+      "Order": 9
     }
   ]
 } ]
