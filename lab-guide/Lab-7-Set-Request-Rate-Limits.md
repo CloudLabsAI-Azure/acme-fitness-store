@@ -8,7 +8,7 @@ In this lab, you will use Spring Cloud Gateway filters to apply rate limiting to
 1. Make sure you are operating from the ./scripts folder.
 
 ```shell
-cd ./scripts
+cd ../../../azure-spring-apps-enterprise/scripts/
 pwd
 ```
 2. Create a bash script with environment variables by making a copy of the supplied template:.
@@ -20,7 +20,7 @@ cp ./setup-storage-env-variables-template.sh ./setup-storage-env-variables.sh
 3. Using an editor of your choice, edit the file, (for the purposes of example we will use the nano editor), and add the following values.
 
 ```shell
-vi `setup-storage-env-variables.sh` 
+vi setup-storage-env-variables.sh 
 ```
 Enter the following information:
 
@@ -28,6 +28,8 @@ Enter the following information:
 export STORAGE_RESOURCE_GROUP='change-me'      # different resource group from previous steps
 export STORAGE_ACCOUNT_NAME='change-me'        # choose a name for your storage account
 ```
+
+> **Note:** Please provide resource group and storage account a unique name.
 
 4. Then, set the environment.
 
@@ -96,7 +98,7 @@ az ad sp create-for-rbac --name "change-me" \
 1. From the new browser tab, go to [GitHub](https://github.com/) and log in to your account.
     > **Note:** If you don't have an account for GitHub, please sign up.
 
-1. After the login, go to [https://github.com/CloudLabsAI-Azure/acme-fitness-store](https://github.com/CloudLabsAI-Azure/acme-fitness-store) and click on `Fork`.
+1. After the login, go to [https://github.com/CloudLabsAI-Azure/acme-fitness-store-v2](https://github.com/CloudLabsAI-Azure/acme-fitness-store-v2) and click on `Fork`.
 
    ![](Images/L8-t1-s2.png)
    
@@ -155,9 +157,9 @@ az ad sp create-for-rbac --name "change-me" \
    container_name       = "terraform-state-container"
    key                  = "dev.terraform.tfstate"
    ```
-    ![](Images/GitHubSecretsSetup.jpg)
+    ![](Images/newsecret.png)
 
-1. From your repo, click on **Actions**.
+1. From the forked repo, click on **Actions**.
 
 1. Select **Deploy catalog** (1) under __Actions_ All workflows_ from the left side panel and click on **Run workflow** (2). After that Click on **Run workflow** (3) under _Branch: Azure_.
 
