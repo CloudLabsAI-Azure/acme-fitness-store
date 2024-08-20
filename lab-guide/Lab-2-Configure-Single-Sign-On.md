@@ -55,7 +55,7 @@ echo ${PORTAL_URL}
 > The `ISSUER_URI` should take the form `https://login.microsoftonline.com/${TENANT_ID}/v2.0`
 > The `JWK_SET_URI` should take the form `https://login.microsoftonline.com/${TENANT_ID}/discovery/v2.0/keys`
 
-8. Add the necessary web redirect URIs to App Registration in Microsoft Entra ID.
+8. To add the necessary web redirect URIs to App Registration in Microsoft Entra ID.
 
 ```shell
 az ad app update --id ${APPLICATION_ID} \
@@ -77,15 +77,18 @@ cp ./setup-sso-variables-template.sh ./setup-sso-variables.sh
 ```
 
 3. Echo the following values.
+
 ```shell
 echo ${CLIENT_ID}
 echo ${CLIENT_SECRET}
 echo ${ISSUER_URI}
 echo ${JWK_SET_URI}
 ```
+
 4. Edit the copied file.
+
 ```
-vi `setup-sso-variables.sh` 
+vi setup-sso-variables.sh 
 ```
 
 5. Add the required values.
@@ -108,7 +111,7 @@ chmod +x setup-sso-variables.sh
 7. Set the environment variables.
 
 ```shell
-source setup-sso-variables.sh
+source ./setup-sso-variables.sh
 ```
 
 8. Add the following to your SSO provider's list of approved redirect URIs.
@@ -169,7 +172,7 @@ az spring app deploy --name ${IDENTITY_SERVICE_APP} \
     --build-env BP_JVM_VERSION=17
 ```
 
-> Note: The application will take around 3-5 minutes to deploy.
+> **Note:** The application will take around 3-5 minutes to deploy.
 
 ### Task 4: Update Existing Applications
 
@@ -190,6 +193,7 @@ az spring app update --name ${ORDER_SERVICE_APP} \
 ```shell
 echo "https://${GATEWAY_URL}"
 ```
+> **Note:** If you get any popup for accept the terms of entra registered apps click on **Accept**.
 
 3. Configure SSO for API Portal.
 

@@ -10,13 +10,13 @@ Duration: 10 minutes
 
    ```bash
    
-   cd ~/source-code/acme-fitness-store/apps/acme-shopping/public/index.html
+   cd ../../apps/acme-shopping/public/
    vi index.html
    ```
 
     > **Note:** Please note the names of the resources in below images may very with the resources you created in the lab. 
 
-2. The index.html file will open with VS Code Editor, now in line number **67**, update the value from **About ACME Fitness** to **ACME Fitness key Points** and save the file using the **Ctrl+S** key.
+2. The index.html file will open with Code Editor, now in line number **67**, update the value from **About ACME Fitness** to **ACME Fitness key Points** and save the file using the **:wq!** or you can use visual studio code editor and update the field as per your convenience.
 
      ![gfd](Images/lab6.png)
 
@@ -27,7 +27,7 @@ Duration: 10 minutes
 4. Run the below command in the Git Bash to create a new deployment named as **staging-update** for the frontend application.
 
     ```bash
-    az spring app deployment create --name green --app ${FRONTEND_APP} --source-path ./apps/acme-shopping 
+    az spring app deployment create --name green --app ${FRONTEND_APP} --source-path ../../../apps/acme-shopping 
     ```
   
     > **Note:** Please note that the above command can run for up to 10 minutes. Wait until it runs successfully. if you face any issues on source path while running the command, you can provide full path mentioned in step one.
@@ -97,7 +97,7 @@ When the limit is exceeded, the response will fail with `429 Too Many Requests` 
    az spring gateway route-config update \
       --name ${CATALOG_SERVICE_APP} \
       --app-name ${CATALOG_SERVICE_APP} \
-      --routes-file azure/routes/catalog-service_rate-limit.json
+      --routes-file ../../../azure-spring-apps-enterprise/resources/json/routes/catalog-service_rate-limit.json
    ```
 
    ![](Images/mjv2-30-new.png)

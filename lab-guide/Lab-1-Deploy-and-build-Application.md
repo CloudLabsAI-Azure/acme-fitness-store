@@ -34,7 +34,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 6. Run the following command to create a bash script with environment variables by making a copy of the supplied template.
 
 ```shell
-  cp ./azure/setup-env-variables-template.sh ./azure/setup-env-variables.sh
+  cp ./setup-env-variables-template.sh ./setup-env-variables.sh
 ```
 
 7. To open the `./scripts/setup-env-variables.sh` file, run the following command.
@@ -56,7 +56,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
   export LOG_ANALYTICS_WORKSPACE=acme-log-analytic  
   export REGION=eastus                          
 ```
-   >**Note:** Leave default values for RESOURCE_GROUP, LOG_ANALYTICS_WORKSPACE and REGION.
+   >**Note:** provide the values for existing RESOURCE_GROUP, new LOG_ANALYTICS_WORKSPACE and REGION.
    
    ![](Images/mja-setup-env-variables.png)
 
@@ -77,7 +77,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
    > - **Azure username:** <inject key="AzureAdUserEmail"></inject>  
    > - **Password:** <inject key="AzureAdUserPassword"></inject> 
    > 
-   > Close the tab when you see the successful login message and proceed with the next command.
+   > Select **No, Sign in to this app only at stay signed in apps** popup. popup will close  automatically once successful login and proceed with the next command.
 
 
 11. Run the following commands to get the list of subscriptions and to set your subscription.
@@ -116,7 +116,7 @@ az spring create --name ${SPRING_APPS_SERVICE} \
     --enable-app-acc \
     --build-pool-size S2 
 ```
-   > **Note:** Creating the instance will take around **2-3** minutes.
+   > **Note:** Creating the instance will take around **20-30** minutes.
 
 ### Task 2: Configure Log Analytics for Azure Spring Apps
 
@@ -146,6 +146,8 @@ export SPRING_APPS_RESOURCE_ID=$(az spring show \
     --query id \
     -o tsv)
 ```
+
+   > **Note:** If you face any error while running the above command, please log in to azure and check the log analytics workspace name in resource group and replace the name in **setup-env-variables.sh** file.
 
 3. Configure diagnostic settings for the Azure Spring Apps Service.
 
@@ -247,8 +249,7 @@ az spring app create --name ${CATALOG_SERVICE_APP} --instance-count 1 --memory 1
 az spring app create --name ${FRONTEND_APP} --instance-count 1 --memory 1Gi
 ```
 
-> At this time, wait until control is passed back to your console before proceeding. Please check the Portal to make sure ALL services (4 Services & Frontend App) are created.  Should look something like:
-
+> At this time, wait until control is passed back to your console before proceeding or hit **enter** key after 5 mins to get the console back. Please check the Portal to make sure ALL services (4 Services & Frontend App) are created. 
 
 
 ### Task 6: Bind to Application Configuration Service

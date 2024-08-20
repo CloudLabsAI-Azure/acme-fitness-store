@@ -34,7 +34,7 @@ export POSTGRES_SERVER_PASSWORD=change-name         # Postgres server password t
 ```  
    ![](Images/Ex3-T1-S3.png)
    
-> Note: AZURE_CACHE_NAME and POSTGRES_SERVER must be unique names to avoid DNS conflicts
+> Note: AZURE_CACHE_NAME and POSTGRES_SERVER must be unique names to avoid DNS conflicts. also provide username and password for postgres.
 
 5. Run the following command to move back to the acme-fitness-store directory and then set up the environment.
   
@@ -73,7 +73,7 @@ az postgres flexible-server create --name ${POSTGRES_SERVER} \
     --storage-size 32 \
     --yes
 ```
-2. Allow connections from other Azure ServicesSet Firewall rules.
+2. Allow connections from other Azure Services Set Firewall rules.
 
 ```shell
 az postgres flexible-server firewall-rule create --rule-name allAzureIPs \
@@ -142,6 +142,7 @@ az spring connection create postgres-flexible \
     --database ${CATALOG_SERVICE_DB} \
     --client-type springboot \
     --system-identity
+    --yes
 ```
 
 > Note: When the above command is run on iOS, it will require:
