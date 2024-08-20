@@ -23,6 +23,7 @@ Duration: 30 minutes
 
 ```bash
   vi setup-ai-env-variables.sh
+  source ./setup-ai-env-variables.sh
 ```
  - Name, e.g. `my-ai`
  - Endpoint, e.g. `https://my-ai.openai.azure.com`
@@ -36,7 +37,7 @@ Duration: 30 minutes
 
 ```bash
    source ./setup-env-variables.sh
-   export OPENAI_RESOURCE_NAME=<choose-a-resource-name>
+   export OPENAI_RESOURCE_NAME
    az cognitiveservices account create \
       -n ${OPENAI_RESOURCE_NAME} \
       -g ${RESOURCE_GROUP} \
@@ -48,41 +49,43 @@ Duration: 30 minutes
    
    > You can check the resource has been created in Azure Portal under `Azure AI Services`, e.g.
 
-   ![A screenshot of the Azure AI services.](./Images/openai-azure-ai-services.png)
+   ![A screenshot of the Azure AI services.](./Images/openai-azure-ai-services-new.png)
 
 2. Create the model deployments for `text-embedding-ada-002` and `gpt-35-turbo-16k` in your Azure OpenAI service.
    
 ```bash
-  az cognitiveservices account deployment create \
-     -g ${RESOURCE_GROUP} \
-     -n ${OPENAI_RESOURCE_NAME} \
-     --deployment-name text-embedding-ada-002 \
-     --model-name text-embedding-ada-002 \
-     --model-version "2"  \
-     --model-format OpenAI \
-     --scale-type "Standard" 
+az cognitiveservices account deployment create \
+   -g ${RESOURCE_GROUP} \
+   -n ${OPENAI_RESOURCE_NAME} \
+   --deployment-name text-embedding-ada-002 \
+   --model-name text-embedding-ada-002 \
+   --model-version "2"  \
+   --model-format OpenAI \
+   --sku "Standard" \
+   --capacity 1
 
-  az cognitiveservices account deployment create \
-     -g ${RESOURCE_GROUP} \
-     -n ${OPENAI_RESOURCE_NAME} \
-     --deployment-name gpt-35-turbo-16k \
-     --model-name gpt-35-turbo-16k \
-     --model-version "0613"  \
-     --model-format OpenAI \
-     --scale-type "Standard"
+az cognitiveservices account deployment create \
+   -g ${RESOURCE_GROUP} \
+   -n ${OPENAI_RESOURCE_NAME} \
+   --deployment-name gpt-35-turbo-16k \
+   --model-name gpt-35-turbo-16k \
+   --model-version "0613"  \
+   --model-format OpenAI \
+   --sku "Standard" \
+   --capacity 1
 ```
 
    > Alternatively, you can click go to the link, e.g. https://oai.azure.com/
 
-   ![A screenshot of the Azure AI Studio with no deployments.](./Images/openai-azure-ai-studio-deployments-01.png)
+   ![A screenshot of the Azure AI Studio with no deployments.](./Images/openai-azure-ai-studio-deployments-new-01.png)
 
-   ![A screenshot of the Azure AI Studio creating first deployment.](./Images/openai-azure-ai-studio-deployments-02.png)
+   ![A screenshot of the Azure AI Studio creating first deployment.](./Images/openai-azure-ai-studio-deployments-new-02.png)
 
-   ![A screenshot of the Azure AI Studio creating second deployment.](./Images/openai-azure-ai-studio-deployments-03.png)
+   ![A screenshot of the Azure AI Studio creating second deployment.](./Images/openai-azure-ai-studio-deployments-new-03.png)
 
 3. Update the values in `scripts/setup-ai-env-variables.sh`, e.g.
     * for Endpoint and API KEY - check under Azure Portal OpenAI instances in `Keys and Endpoint` section
-    ![A screenshot of the Azure Portal OpenAI instance.](./Images/openai-azure-ai-services-api-key.png)    
+    ![A screenshot of the Azure Portal OpenAI instance.](./Images/openaikey-new.png)    
     * for `AI_APP` use default name, e.g. `assist-service`
     
 4. You can get the endpoint by querying the `cognitiveservices` from Azure CLI, e.g.
@@ -114,14 +117,14 @@ Duration: 30 minutes
     az spring gateway route-config create \
         --name ${AI_APP} \
         --app-name ${AI_APP} \
-        --routes-file /azure-spring-apps-enterprise/resources/json/routes/assist-service.json
+        --routes-file ../resources/json/routes/assist-service.json
 ```
     
 4. Deploy the application, e.g. 
 
 ```bash
     az spring app deploy --name ${AI_APP} \
-        --source-path /apps/acme-assist \
+        --source-path ../../apps/acme-assist \
         --build-env BP_JVM_VERSION=17 \
         --env \
             SPRING_AI_AZURE_OPENAI_ENDPOINT=${SPRING_AI_AZURE_OPENAI_ENDPOINT} \
