@@ -22,7 +22,6 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 4. Run the following command to remove previous versions and install the latest Azure Spring Apps Enterprise tier extension.
 
 ```shell
-  az extension remove --name spring-cloud
   az extension add --name spring
 ```
     
