@@ -28,7 +28,7 @@ In this task, you will try to deploy a very simple hello-world Spring Boot app t
 5. To change the directory to the sample app repository in your shell, run the following command in the Bash shell pane.
 
 ```shell
-  cd source-code/acme-fitness-store/azure-spring-apps-enterprise/scripts
+  cd source-code/acme-fitness-store-v2/azure-spring-apps-enterprise/scripts
 ```
     
 6. Run the following command to create a bash script with environment variables by making a copy of the supplied template.
