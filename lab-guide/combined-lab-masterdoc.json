@@ -1,0 +1,20 @@
+[
+    {
+        "Name": "Setting up CI/CD with GitHub Actions",
+        "Language": "English",
+        "Files": [
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/gettingstartedpage.md",
+                "Order": 1
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/ms-spl-running-java-apps-on-azure-spring-apps.md",
+                "Order": 2
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/acme-fitness-store/Azure/lab-guide/ms-spl-settingup-ci-cd-with-github-actions.md",
+                "Order": 3
+            }
+        ]
+    }
+]
